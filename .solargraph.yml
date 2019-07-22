@@ -1,0 +1,13 @@
+---
+include:
+- mrblib/*.rb
+- mruby/mrblib/*.rb
+- mruby/mrbgems/**/mrblib/*.rb
+exclude:
+- test/*.rb
+require: []
+domains: []
+reporters:
+- require_not_found
+require_paths: []
+max_files: 5000
