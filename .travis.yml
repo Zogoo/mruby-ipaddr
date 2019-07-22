@@ -1,2 +1,17 @@
+dist: bionic
+language: c
+compiler:
+- gcc
+addons:
+  apt:
+    packages:
+    - make
+    - gcc
+    - bison
+    - flex
+    - rake
+    - git
+    - curl
+    - ca-certificates
 script:
-  - "ruby run_test.rb all test"
+- rake test
