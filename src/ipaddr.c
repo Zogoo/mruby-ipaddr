@@ -7,6 +7,26 @@
 #include "mruby/string.h"
 
 static mrb_value
+mrb_ipaddr_left_shift(mrb_state *mrb, mrb_value klass)
+{
+  mrb_int num, n, b;
+  char *addr, buf[50] = {0};
+
+  mrb_get_args(mrb, "is", &num, &addr, &n);
+
+  if (n > sizeof(buf) - 1)
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "invalid address");
+
+  b = n;
+
+  while (--b >= 0) {
+    buf[b] = *(addr + b) << num;
+  }
+
+  return mrb_str_new(mrb, buf, n);
+}
+
+static mrb_value
 mrb_ipaddr_ntop(mrb_state *mrb, mrb_value klass)
 {
   mrb_int af, n;
@@ -64,6 +84,7 @@ mrb_mruby_ipaddr_gem_init(mrb_state *mrb)
   c = mrb_define_class(mrb, "IPAddr", mrb->object_class);
   mrb_define_class_method(mrb, c, "_pton", mrb_ipaddr_pton, MRB_ARGS_REQ(1));
   mrb_define_class_method(mrb, c, "ntop", mrb_ipaddr_ntop, MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb, c, "_left_shift", mrb_ipaddr_left_shift, MRB_ARGS_REQ(1));
 }
 
 void

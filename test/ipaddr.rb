@@ -109,3 +109,8 @@ end
 assert('IPAddr#~') do
   (~IPAddr.new('192.0.2.1')).to_s == '63.255.253.254'
 end
+
+assert('IPAddr#<<') do
+  assert_equal((IPAddr.new('192.0.2.1') << 1).to_s, "128.0.4.2")
+  assert_equal((IPAddr.new('2001:db8::1') << 1).to_s, "4002:1b70::2")
+end

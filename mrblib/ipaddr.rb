@@ -81,7 +81,10 @@ class IPAddr
   end
 
   #def &(other)
-  #def <<(num)
+
+  def <<(num)
+    IPAddr.new_ntoh(IPAddr._left_shift(num, @addr))
+  end
 
   def <=>(other)
     if @family == other.family
