@@ -86,6 +86,10 @@ class IPAddr
     IPAddr.new_ntoh(IPAddr._left_shift(num, @addr))
   end
 
+  def >>(num)
+    IPAddr.new_ntoh(IPAddr._right_shift(num, @addr))
+  end
+
   def <=>(other)
     if @family == other.family
       @addr <=> other.hton
@@ -104,7 +108,6 @@ class IPAddr
 
   #def ===(ipaddr)
   #alias include? ===
-  #def >>(num)
 
   def eql?(other)
     @addr == other.hton and @mask == other._mask and @family == other.family

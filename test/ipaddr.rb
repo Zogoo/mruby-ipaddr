@@ -110,7 +110,30 @@ assert('IPAddr#~') do
   (~IPAddr.new('192.0.2.1')).to_s == '63.255.253.254'
 end
 
-assert('IPAddr#<<') do
-  assert_equal((IPAddr.new('192.0.2.1') << 1).to_s, "128.0.4.2")
-  assert_equal((IPAddr.new('2001:db8::1') << 1).to_s, "4002:1b70::2")
+assert('IPAddr#<<', 'ipv4') do
+  assert_equal((IPAddr.new('170.85.85.170') << 1).to_s,  "84.170.171.84")
+  assert_equal((IPAddr.new('170.85.85.170') << 19).to_s, "173.80.0.0")
+  assert_equal((IPAddr.new('170.85.85.170') << 37).to_s, "0.0.0.0")
+end
+
+assert('IPAddr#<<', 'ipv6') do
+  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') << 1).to_s,   "5554:aaaa::1:5554:aaaa")
+  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') << 37).to_s,  "::15:554a:aaa0:0:0")
+  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') << 73).to_s,  "0:155:54aa:aa00::")
+  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') << 127).to_s, "8000::")
+  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') << 131).to_s, "::")
+end
+
+assert('IPAddr#>>', 'ipv4') do
+  assert_equal((IPAddr.new('170.85.85.170') >> 1).to_s,  "85.42.170.213")
+  assert_equal((IPAddr.new('170.85.85.170') >> 19).to_s, "0.0.21.74")
+  assert_equal((IPAddr.new('170.85.85.170') >> 37).to_s, "0.0.0.0")
+end
+
+assert('IPAddr#>>', 'ipv6') do
+  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') >> 1).to_s,   "5555:2aaa:8000::5555:2aaa")
+  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') >> 37).to_s,  "0:0:555:52aa:a800::")
+  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') >> 73).to_s,  "::55:552a:aa80:0")
+  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') >> 127).to_s, "::1")
+  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') >> 131).to_s, "::")
 end

@@ -1,29 +1,128 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <stdint.h>
 #include <string.h>
 #include <sys/socket.h>
-#include <sys/types.h>
 #include "mruby.h"
 #include "mruby/string.h"
+
+union ip_addr {
+  uint64_t u64[2];
+  uint32_t u32[4];
+  uint16_t u16[8];
+  uint8_t raw[16];
+};
+
+static mrb_value
+mrb_ipaddr_right_shift(mrb_state *mrb, mrb_value klass)
+{
+  mrb_int num, n;
+  uint8_t *src;
+  union ip_addr buf = {0};
+
+  mrb_get_args(mrb, "is", &num, (char *)&src, &n);
+
+  if (num < 0) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "invalid address");
+  }
+
+  if (n != 4 && n != 16) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "invalid address");
+  }
+
+  if (num < 128) {
+    for (mrb_int i = 0; i < n; i += 4) {
+      buf.u32[i / 4] = htonl(*(src + (i + 0)) | *(src + (i + 1)) << 8 | *(src + (i + 2)) << 16 | *(src + (i + 3)) << 24);
+    }
+  }
+
+  if (num >= 32 && num <= 63) {
+    buf.u32[3] = buf.u32[2];
+    buf.u32[2] = buf.u32[1];
+    buf.u32[1] = buf.u32[0];
+    buf.u32[0] = 0ul;
+    num -= 32;
+  } else if (num >= 64 && num <= 95) {
+    buf.u32[3] = buf.u32[1];
+    buf.u32[2] = buf.u32[0];
+    buf.u32[1] = 0ul;
+    buf.u32[0] = 0ul;
+    num -= 64;
+  } else if (num >= 96 && num <= 127) {
+    buf.u32[3] = buf.u32[0];
+    buf.u32[2] = 0ul;
+    buf.u32[1] = 0ul;
+    buf.u32[0] = 0ul;
+    num -= 96;
+  }
+
+  for (int i = 3; i >= 0; i--) {
+    if (i != 0) {
+      buf.u32[i] = (buf.u32[i - 1] << ((sizeof(uint32_t) * CHAR_BIT) - num)) | (buf.u32[i] >> num);
+    } else {
+      buf.u32[i] = (buf.u32[i] >> num);
+    }
+
+    buf.u32[i] = ntohl(buf.u32[i]);
+  }
+
+  return mrb_str_new(mrb, (char *)&buf.raw, n);
+}
 
 static mrb_value
 mrb_ipaddr_left_shift(mrb_state *mrb, mrb_value klass)
 {
-  mrb_int num, n, b;
-  char *addr, buf[50] = {0};
+  mrb_int num, n;
+  unsigned char *src;
+  union ip_addr buf = {0};
 
-  mrb_get_args(mrb, "is", &num, &addr, &n);
+  mrb_get_args(mrb, "is", &num, (char *)&src, &n);
 
-  if (n > sizeof(buf) - 1)
+  if (num < 0) {
     mrb_raise(mrb, E_ARGUMENT_ERROR, "invalid address");
-
-  b = n;
-
-  while (--b >= 0) {
-    buf[b] = *(addr + b) << num;
   }
 
-  return mrb_str_new(mrb, buf, n);
+  if (n != 4 && n != 16) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "invalid address");
+  }
+
+  if (num < 128) {
+    for (mrb_int i = 0; i < n; i += 4) {
+      buf.u32[i / 4] = htonl(*(src + (i + 0)) | *(src + (i + 1)) << 8 | *(src + (i + 2)) << 16 | *(src + (i + 3)) << 24);
+    }
+  }
+
+  if (num >= 32 && num <= 63) {
+    buf.u32[0] = buf.u32[1];
+    buf.u32[1] = buf.u32[2];
+    buf.u32[2] = buf.u32[3];
+    buf.u32[3] = 0ul;
+    num -= 32;
+  } else if (num >= 64 && num <= 95) {
+    buf.u32[0] = buf.u32[2];
+    buf.u32[1] = buf.u32[3];
+    buf.u32[2] = 0ul;
+    buf.u32[3] = 0ul;
+    num -= 64;
+  } else if (num >= 96 && num <= 127) {
+    buf.u32[0] = buf.u32[3];
+    buf.u32[1] = 0ul;
+    buf.u32[2] = 0ul;
+    buf.u32[3] = 0ul;
+    num -= 96;
+  }
+
+  for (int i = 0; i < 4; i++) {
+    if (i != 3) {
+      buf.u32[i] = (buf.u32[i + 1] >> ((sizeof(uint32_t) * CHAR_BIT) - num)) | (buf.u32[i] << num);
+    } else {
+      buf.u32[i] = (buf.u32[i] << num);
+    }
+
+    buf.u32[i] = ntohl(buf.u32[i]);
+  }
+
+  return mrb_str_new(mrb, (char *)&buf.raw, n);
 }
 
 static mrb_value
@@ -85,6 +184,7 @@ mrb_mruby_ipaddr_gem_init(mrb_state *mrb)
   mrb_define_class_method(mrb, c, "_pton", mrb_ipaddr_pton, MRB_ARGS_REQ(1));
   mrb_define_class_method(mrb, c, "ntop", mrb_ipaddr_ntop, MRB_ARGS_REQ(1));
   mrb_define_class_method(mrb, c, "_left_shift", mrb_ipaddr_left_shift, MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb, c, "_right_shift", mrb_ipaddr_right_shift, MRB_ARGS_REQ(1));
 }
 
 void
