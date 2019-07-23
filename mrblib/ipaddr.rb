@@ -80,7 +80,16 @@ class IPAddr
     @mask
   end
 
-  #def &(other)
+  def &(other)
+    case other
+    when IPAddr
+      IPAddr.new_ntoh(IPAddr._op_and_ipaddr(@addr, other.hton))
+    when Integer
+      IPAddr.new_ntoh(IPAddr._op_and_integer(@addr, other))
+    else
+      raise ArgumentError, "invalid address"
+    end
+  end
 
   def <<(num)
     IPAddr.new_ntoh(IPAddr._left_shift(num, @addr))
