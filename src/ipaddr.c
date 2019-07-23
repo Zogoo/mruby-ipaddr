@@ -13,6 +13,63 @@ union ip_addr {
   uint8_t raw[16];
 };
 
+static void
+copy_htonl_ip_addr_buffer(union ip_addr *buf, mrb_int len, uint8_t *src)
+{
+  for (mrb_int i = 0; i < len; i += 4) {
+    buf->u32[i / 4] = htonl(*(src + (i + 0)) | *(src + (i + 1)) << 8 | *(src + (i + 2)) << 16 | *(src + (i + 3)) << 24);
+  }
+}
+
+static void
+copy_ntohl_ip_addr_buffer(union ip_addr *buf)
+{
+  for (int i = 0; i < 4; i++) {
+    buf->u32[i] = ntohl(buf->u32[i]);
+  }
+}
+
+static mrb_value
+mrb_ipaddr_op_and_ipaddr(mrb_state *mrb, mrb_value klass)
+{
+  mrb_int slen, olen;
+  uint8_t *self, *other;
+  union ip_addr sbuf = {0}, obuf = {0};
+
+  mrb_get_args(mrb, "ss", (char *)&self, &slen, (char *)&other, &olen);
+
+  if (slen != 4 && slen != 16 && olen != 4 && olen != 16) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "invalid address");
+  }
+
+  copy_htonl_ip_addr_buffer(&sbuf, slen, self);
+  copy_htonl_ip_addr_buffer(&obuf, olen, other);
+
+  copy_ntohl_ip_addr_buffer(&sbuf);
+
+  return mrb_str_new(mrb, (char *)&sbuf.raw, slen);
+}
+
+static mrb_value
+mrb_ipaddr_op_and_integer(mrb_state *mrb, mrb_value klass)
+{
+  mrb_int slen, other;
+  uint8_t *self;
+  union ip_addr sbuf = {0};
+
+  mrb_get_args(mrb, "si", (char *)&self, &slen, &other);
+
+  if (slen != 4 && slen != 16) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "invalid address");
+  }
+
+  copy_htonl_ip_addr_buffer(&sbuf, slen, self);
+
+  copy_ntohl_ip_addr_buffer(&sbuf);
+
+  return mrb_str_new(mrb, (char *)&sbuf.raw, slen);
+}
+
 static mrb_value
 mrb_ipaddr_right_shift(mrb_state *mrb, mrb_value klass)
 {
@@ -31,9 +88,7 @@ mrb_ipaddr_right_shift(mrb_state *mrb, mrb_value klass)
   }
 
   if (num < 128) {
-    for (mrb_int i = 0; i < n; i += 4) {
-      buf.u32[i / 4] = htonl(*(src + (i + 0)) | *(src + (i + 1)) << 8 | *(src + (i + 2)) << 16 | *(src + (i + 3)) << 24);
-    }
+    copy_htonl_ip_addr_buffer(&buf, n, src);
   }
 
   if (num >= 32 && num <= 63) {
@@ -87,9 +142,7 @@ mrb_ipaddr_left_shift(mrb_state *mrb, mrb_value klass)
   }
 
   if (num < 128) {
-    for (mrb_int i = 0; i < n; i += 4) {
-      buf.u32[i / 4] = htonl(*(src + (i + 0)) | *(src + (i + 1)) << 8 | *(src + (i + 2)) << 16 | *(src + (i + 3)) << 24);
-    }
+    copy_htonl_ip_addr_buffer(&buf, n, src);
   }
 
   if (num >= 32 && num <= 63) {
@@ -185,6 +238,8 @@ mrb_mruby_ipaddr_gem_init(mrb_state *mrb)
   mrb_define_class_method(mrb, c, "ntop", mrb_ipaddr_ntop, MRB_ARGS_REQ(1));
   mrb_define_class_method(mrb, c, "_left_shift", mrb_ipaddr_left_shift, MRB_ARGS_REQ(1));
   mrb_define_class_method(mrb, c, "_right_shift", mrb_ipaddr_right_shift, MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb, c, "_op_and_ipaddr", mrb_ipaddr_op_and_ipaddr, MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb, c, "_op_and_integer", mrb_ipaddr_op_and_integer, MRB_ARGS_REQ(1));
 }
 
 void
