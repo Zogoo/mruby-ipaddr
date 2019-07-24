@@ -67,8 +67,6 @@ before_install:
     export LIBPATH="${WIN10SDK_DIR}/Lib/${UCRT_REV}/ucrt/x64":$LIBPATH
     export LIBPATH="${WIN10SDK_DIR}/Lib/${UCRT_REV}/um/x64":$LIBPATH
 
-    export CL="/FS"
-
     # echo "####"
     # ls "/c/Program Files (x86)"
     # echo "####/MSBuild"
