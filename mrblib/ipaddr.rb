@@ -132,7 +132,7 @@ class IPAddr
   end
 
   def ===(ipaddr)
-    other = coerce_other(ipaddr)
+    other = IPAddr.new_ntoh(coerce_other(ipaddr).hton)
     other._setmask(@mask)
     other._applymask
     @addr == other.hton
