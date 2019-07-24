@@ -52,14 +52,14 @@ before_script:
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
-    echo 'call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat" -no_ext' >> build.cmd
-    echo 'set PATH=%PATH%;C:\tools\ruby25\bin' >> build.cmd
-    echo 'set YACC=C:\ProgramData\chocolatey\lib\winflexbison\tools\win_bison.exe' >> build.cmd
-    echo 'rake test' >> build.cmd
+    echo 'call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat" -no_ext' >> build.bat
+    echo 'set PATH=%PATH%;C:\tools\ruby25\bin' >> build.bat
+    echo 'set YACC=C:\ProgramData\chocolatey\lib\winflexbison\tools\win_bison.exe' >> build.bat
+    echo 'rake test' >> build.bat
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
-    export BUILD_CMD="cmd /c start cmd /c build.cmd"
+    export BUILD_CMD="./build.bat"
   else
     export BUILD_CMD="rake test"
   fi
