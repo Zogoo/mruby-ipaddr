@@ -114,6 +114,7 @@ assert('IPAddr#<<', 'ipv4') do
   assert_equal((IPAddr.new('170.85.85.170') << 1).to_s,  "84.170.171.84")
   assert_equal((IPAddr.new('170.85.85.170') << 19).to_s, "173.80.0.0")
   assert_equal((IPAddr.new('170.85.85.170') << 37).to_s, "0.0.0.0")
+  assert_raise(ArgumentError) { IPAddr.new('170.85.85.170') << -1 }
 end
 
 assert('IPAddr#<<', 'ipv6') do
@@ -122,12 +123,14 @@ assert('IPAddr#<<', 'ipv6') do
   assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') << 73).to_s,  "0:155:54aa:aa00::")
   assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') << 127).to_s, "8000::")
   assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') << 131).to_s, "::")
+  assert_raise(ArgumentError) { IPAddr.new('aaaa:5555::aaaa:5555') << -1 }
 end
 
 assert('IPAddr#>>', 'ipv4') do
   assert_equal((IPAddr.new('170.85.85.170') >> 1).to_s,  "85.42.170.213")
   assert_equal((IPAddr.new('170.85.85.170') >> 19).to_s, "0.0.21.74")
   assert_equal((IPAddr.new('170.85.85.170') >> 37).to_s, "0.0.0.0")
+  assert_raise(ArgumentError) { IPAddr.new('170.85.85.170') >> -1 }
 end
 
 assert('IPAddr#>>', 'ipv6') do
@@ -136,6 +139,7 @@ assert('IPAddr#>>', 'ipv6') do
   assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') >> 73).to_s,  "::55:552a:aa80:0")
   assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') >> 127).to_s, "::1")
   assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') >> 131).to_s, "::")
+  assert_raise(ArgumentError) { IPAddr.new('aaaa:5555::aaaa:5555') >> -1 }
 end
 
 assert('IPAddr#&', 'ipv4') do
