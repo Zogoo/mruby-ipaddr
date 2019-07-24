@@ -155,3 +155,17 @@ assert('IPAddr#&', 'ipv6') do
   assert_equal((a & 123456789123456789).to_s,       "::168.128.85.21")
   assert_equal((a & IPAddr.new('aaaa::5555')).to_s, "aaaa::5555")
 end
+
+assert('IPAddr#|', 'ipv4') do
+  a = IPAddr.new('170.85.85.170')
+  assert_equal((a | 123456789).to_s,                 "175.95.221.191")
+  assert_equal((a | IPAddr.new('255.0.0.255')).to_s, "255.85.85.255")
+  assert_raise(ArgumentError) { a | 123456789123456789 }
+end
+
+assert('IPAddr#|', 'ipv6') do
+  a = IPAddr.new('aaaa:5555::aaaa:5555')
+  assert_equal((a | 123456789).to_s,            "aaaa:5555::affb:dd55")
+  assert_equal((a | 123456789123456789).to_s,   "aaaa:5555::1b6:9b4b:aefa:5f55")
+  assert_equal((a | IPAddr.new('ffff::')).to_s, "ffff:5555::aaaa:5555")
+end
