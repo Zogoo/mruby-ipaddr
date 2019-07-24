@@ -71,13 +71,17 @@ matrix:
     - MRUBY_TOOLCHAIN=gcc
     - MRUBY_INT_SIZE=MRB_INT32
   - os: windows
+    install:
+    - 'gem install rake'
     env:
     - MRUBY_TOOLCHAIN=vscpp
     - MRUBY_INT_SIZE=MRB_INT64
   - os: windows
+    install:
+    - 'gem install rake'
     env:
     - MRUBY_TOOLCHAIN=vscpp
     - MRUBY_INT_SIZE=MRB_INT32
 
 script:
-- ruby mruby/minirake -f Rakefile -j 4 test
+- rake test
