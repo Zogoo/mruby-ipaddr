@@ -1,8 +1,15 @@
+#ifdef _WIN32
+#include <winsock2.h>
+#else
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <sys/socket.h>
+#endif
+
+#include <stddef.h>
 #include <stdint.h>
 #include <string.h>
-#include <sys/socket.h>
+
 #include "mruby.h"
 #include "mruby/string.h"
 
@@ -34,7 +41,7 @@ mrb_ipaddr_op_or_ipaddr(mrb_state *mrb, mrb_value klass)
 {
   mrb_int slen, olen;
   uint8_t *self, *other;
-  union ip_addr sbuf = {0}, obuf = {0};
+  union ip_addr sbuf = {}, obuf = {};
 
   mrb_get_args(mrb, "ss", (char *)&self, &slen, (char *)&other, &olen);
 
@@ -57,7 +64,7 @@ mrb_ipaddr_op_or_integer(mrb_state *mrb, mrb_value klass)
 {
   mrb_int slen, other;
   uint8_t *self;
-  union ip_addr sbuf = {0};
+  union ip_addr sbuf = {};
 
   mrb_get_args(mrb, "si", (char *)&self, &slen, &other);
 
@@ -94,7 +101,7 @@ mrb_ipaddr_op_and_ipaddr(mrb_state *mrb, mrb_value klass)
 {
   mrb_int slen, olen;
   uint8_t *self, *other;
-  union ip_addr sbuf = {0}, obuf = {0};
+  union ip_addr sbuf = {}, obuf = {};
 
   mrb_get_args(mrb, "ss", (char *)&self, &slen, (char *)&other, &olen);
 
@@ -117,7 +124,7 @@ mrb_ipaddr_op_and_integer(mrb_state *mrb, mrb_value klass)
 {
   mrb_int slen, other;
   uint8_t *self;
-  union ip_addr sbuf = {0};
+  union ip_addr sbuf = {};
 
   mrb_get_args(mrb, "si", (char *)&self, &slen, &other);
 
@@ -154,7 +161,7 @@ mrb_ipaddr_right_shift(mrb_state *mrb, mrb_value klass)
 {
   mrb_int num, n;
   uint8_t *src;
-  union ip_addr buf = {0};
+  union ip_addr buf = {};
 
   mrb_get_args(mrb, "is", &num, (char *)&src, &n);
 
@@ -208,7 +215,7 @@ mrb_ipaddr_left_shift(mrb_state *mrb, mrb_value klass)
 {
   mrb_int num, n;
   unsigned char *src;
-  union ip_addr buf = {0};
+  union ip_addr buf = {};
 
   mrb_get_args(mrb, "is", &num, (char *)&src, &n);
 
