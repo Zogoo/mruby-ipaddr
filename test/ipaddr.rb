@@ -111,32 +111,32 @@ assert('IPAddr#~') do
 end
 
 assert('IPAddr#<<', 'ipv4') do
-  assert_equal((IPAddr.new('170.85.85.170') << 1).to_s,  "84.170.171.84")
+  assert_equal((IPAddr.new('170.85.85.170') << 1).to_s, "84.170.171.84")
   assert_equal((IPAddr.new('170.85.85.170') << 19).to_s, "173.80.0.0")
   assert_equal((IPAddr.new('170.85.85.170') << 37).to_s, "0.0.0.0")
   assert_raise(ArgumentError) { IPAddr.new('170.85.85.170') << -1 }
 end
 
 assert('IPAddr#<<', 'ipv6') do
-  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') << 1).to_s,   "5554:aaaa::1:5554:aaaa")
-  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') << 37).to_s,  "::15:554a:aaa0:0:0")
-  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') << 73).to_s,  "0:155:54aa:aa00::")
+  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') << 1).to_s, "5554:aaaa::1:5554:aaaa")
+  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') << 37).to_s, "::15:554a:aaa0:0:0")
+  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') << 73).to_s, "0:155:54aa:aa00::")
   assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') << 127).to_s, "8000::")
   assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') << 131).to_s, "::")
   assert_raise(ArgumentError) { IPAddr.new('aaaa:5555::aaaa:5555') << -1 }
 end
 
 assert('IPAddr#>>', 'ipv4') do
-  assert_equal((IPAddr.new('170.85.85.170') >> 1).to_s,  "85.42.170.213")
+  assert_equal((IPAddr.new('170.85.85.170') >> 1).to_s, "85.42.170.213")
   assert_equal((IPAddr.new('170.85.85.170') >> 19).to_s, "0.0.21.74")
   assert_equal((IPAddr.new('170.85.85.170') >> 37).to_s, "0.0.0.0")
   assert_raise(ArgumentError) { IPAddr.new('170.85.85.170') >> -1 }
 end
 
 assert('IPAddr#>>', 'ipv6') do
-  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') >> 1).to_s,   "5555:2aaa:8000::5555:2aaa")
-  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') >> 37).to_s,  "0:0:555:52aa:a800::")
-  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') >> 73).to_s,  "::55:552a:aa80:0")
+  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') >> 1).to_s, "5555:2aaa:8000::5555:2aaa")
+  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') >> 37).to_s, "0:0:555:52aa:a800::")
+  assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') >> 73).to_s, "::55:552a:aa80:0")
   assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') >> 127).to_s, "::1")
   assert_equal((IPAddr.new('aaaa:5555::aaaa:5555') >> 131).to_s, "::")
   assert_raise(ArgumentError) { IPAddr.new('aaaa:5555::aaaa:5555') >> -1 }
@@ -144,30 +144,40 @@ end
 
 assert('IPAddr#&', 'ipv4') do
   a = IPAddr.new('170.85.85.170')
-  assert_equal((a & 123456789).to_s,                 "2.81.69.0")
+  assert_equal((a & 123456789).to_s, "2.81.69.0")
   assert_equal((a & IPAddr.new('170.0.0.170')).to_s, "170.0.0.170")
   assert_raise(ArgumentError) { a & 123456789123456789 }
 end
 
 assert('IPAddr#&', 'ipv6') do
   a = IPAddr.new('aaaa:5555::aaaa:5555')
-  assert_equal((a & 123456789).to_s,                          "::2.10.69.21")
-  assert_equal((a & 123456789123456789).to_s,                 "::168.128.85.21")
+  assert_equal((a & 123456789).to_s, "::2.10.69.21")
   assert_equal((a & IPAddr.new('a5a5:5a5a::5a5a:a5a5')).to_s, "a0a0:5050::a0a:505")
+
+  if 123456789123456789.is_a?(Integer)
+    assert_equal((a & 123456789123456789).to_s, "::168.128.85.21")
+  else
+    assert_raise(ArgumentError) { a & 123456789123456789 }
+  end
 end
 
 assert('IPAddr#|', 'ipv4') do
   a = IPAddr.new('170.85.85.170')
-  assert_equal((a | 123456789).to_s,                 "175.95.221.191")
+  assert_equal((a | 123456789).to_s, "175.95.221.191")
   assert_equal((a | IPAddr.new('255.0.0.255')).to_s, "255.85.85.255")
   assert_raise(ArgumentError) { a | 123456789123456789 }
 end
 
 assert('IPAddr#|', 'ipv6') do
   a = IPAddr.new('aaaa:5555::aaaa:5555')
-  assert_equal((a | 123456789).to_s,                          "aaaa:5555::affb:dd55")
-  assert_equal((a | 123456789123456789).to_s,                 "aaaa:5555::1b6:9b4b:aefa:5f55")
+  assert_equal((a | 123456789).to_s, "aaaa:5555::affb:dd55")
   assert_equal((a | IPAddr.new('a5a5:5a5a::5a5a:a5a5')).to_s, "afaf:5f5f::fafa:f5f5")
+
+  if 123456789123456789.is_a?(Integer)
+    assert_equal((a | 123456789123456789).to_s, "aaaa:5555::1b6:9b4b:aefa:5f55")
+  else
+    assert_raise(ArgumentError) { a & 123456789123456789 }
+  end
 end
 
 assert('IPAddr#include?', 'ipv4') do
