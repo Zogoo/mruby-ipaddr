@@ -10,6 +10,9 @@ os:
 - osx
 - windows
 
+dist: bionic
+osx_image: xcode11
+
 env:
   global:
   - MRUBY_REPOSITORY=https://github.com/mruby/mruby.git
@@ -32,11 +35,11 @@ matrix:
   - os: osx
     compiler: cl
 
-addons:
-  apt:
-    packages:
-    - bison
-    - flex
+# addons:
+#   apt:
+#     packages:
+#     - bison
+#     - flex
 
 before_install:
 - |
@@ -47,15 +50,11 @@ before_install:
     export CXX=gcc-9
   fi
 - |
-  if [ "${TRAVIS_OS_NAME}" = "windows" ] && [ "${TRAVIS_COMPILER}" = "cl" ]; then
-    export PATH=$PATH:"C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
-    echo '######## Hostx64/x64'
-    ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64'
-    echo '######## Hostx64/x86'
-    ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x86'
-  fi
-- |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
+    VS2017DIR=/c/Program Files (x86)/Microsoft Visual Studio/2017
+    export PATH=$PATH:"${VS2017DIR}/BuildTools/MSBuild/15.0/Bin"
+    export PATH=$PATH:"${VS2017DIR}/BuildTools/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64"
+
     choco install winflexbison
     WINFLEXBISON_DIR="/c/ProgramData/chocolatey/lib/winflexbison/tools"
     cp "${WINFLEXBISON_DIR}/win_bison.exe" "${WINFLEXBISON_DIR}/bison.exe"
