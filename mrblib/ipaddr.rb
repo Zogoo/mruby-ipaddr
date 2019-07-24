@@ -67,6 +67,11 @@ class IPAddr
     a.set2(addr, f)
   end
 
+  def self.ntop(addr)
+    i = IPAddr.new_ntoh(addr)
+    IPSocket.ntop(i.family, i.hton)
+  end
+
   # private
   def _applymask
     a = @addr.unpack("C*")
@@ -201,7 +206,7 @@ class IPAddr
   end
 
   def to_s
-    IPAddr.ntop(@addr)
+    IPSocket.ntop(@family, @addr)
   end
 
   def ~
