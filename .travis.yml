@@ -55,14 +55,16 @@ before_install:
     WIN10SDK_DIR="${PROGRAM_DIR}/Windows Kits/10"
 
     export PATH=$PATH:"${VC2017_DIR}/bin/Hostx64/x64"
+
     export INCLUDE="${VC2017_DIR}/include"
-    # export INCLUDE="${VC2015_DIR}/include"
-    export INCLUDE="${WIN10SDK_DIR}/Include/${UCRT_REV}/ucrt"
-    export INCLUDE="${WIN10SDK_DIR}/Include/${UCRT_REV}/um"
+    # export INCLUDE="${VC2015_DIR}/include":$INCLUDE
+    export INCLUDE="${WIN10SDK_DIR}/Include/${UCRT_REV}/ucrt":$INCLUDE
+    export INCLUDE="${WIN10SDK_DIR}/Include/${UCRT_REV}/um":$INCLUDE
+
     export LIBPATH="${VC2017_DIR}/lib/x64"
-    # export LIBPATH="${VC2015_DIR}/lib/amd64"
-    export LIBPATH="${WIN10SDK_DIR}/Lib/${UCRT_REV}/ucrt/x64"
-    export LIBPATH="${WIN10SDK_DIR}/Lib/${UCRT_REV}/um/x64"
+    # export LIBPATH="${VC2015_DIR}/lib/amd64":$LIBPATH
+    export LIBPATH="${WIN10SDK_DIR}/Lib/${UCRT_REV}/ucrt/x64":$LIBPATH
+    export LIBPATH="${WIN10SDK_DIR}/Lib/${UCRT_REV}/um/x64":$LIBPATH
 
     # echo "####"
     # ls "/c/Program Files (x86)"
@@ -76,14 +78,14 @@ before_install:
     # ls "/c/Program Files (x86)/Microsoft Visual Studio/2017"
     # echo "####/Microsoft Visual Studio/2017/BuildTools"
     # ls "/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools"
-    echo "####/Microsoft Visual Studio/2017/BuildTools/SDK"
-    ls "/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/SDK"
+    # echo "####/Microsoft Visual Studio/2017/BuildTools/SDK"
+    # ls "/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/SDK"
     # echo "####/Microsoft Visual Studio/2017/BuildTools/VC"
     # ls "/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC"
-    echo "####/Microsoft Visual Studio/2017/BuildTools/VC/Tools"
-    ls "/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools"
-    echo "####/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC"
-    ls "/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC"
+    # echo "####/Microsoft Visual Studio/2017/BuildTools/VC/Tools"
+    # ls "/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools"
+    # echo "####/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC"
+    # ls "/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC"
     # echo "####/Microsoft Visual Studio 14.0"
     # ls "/c/Program Files (x86)/Microsoft Visual Studio 14.0"
     # echo "####/Microsoft Visual Studio 14.0/VC"
@@ -106,16 +108,18 @@ before_install:
     # ls "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17134.0"
     # echo "####/Windows Kits/10/Include/10.0.17134.0/ucrt"
     # ls "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17134.0/ucrt"
-    echo "####/Windows Kits/10/Include/10.0.17134.0/um"
-    ls "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17134.0/um"
+    # echo "####/Windows Kits/10/Include/10.0.17134.0/um"
+    # ls "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17134.0/um"
     # echo "####/Windows Kits/10/Lib"
     # ls "/c/Program Files (x86)/Windows Kits/10/Lib"
     # echo "####/Windows Kits/10/Lib/10.0.17134.0"
     # ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0"
     # echo "####/Windows Kits/10/Lib/10.0.17134.0/ucrt"
     # ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0/ucrt"
-    echo "####/Windows Kits/10/Lib/10.0.17134.0/um"
-    ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0/um"
+    # echo "####/Windows Kits/10/Lib/10.0.17134.0/um"
+    # ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0/um"
+    echo "####/Windows Kits/10/Lib/10.0.17134.0/um/x64"
+    ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0/um/x64"
     # echo "####/Windows Kits/10/Lib/10.0.17134.0/ucrt/x64"
     # ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0/ucrt/x64"
     echo "####"
