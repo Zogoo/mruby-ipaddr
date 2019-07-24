@@ -58,6 +58,7 @@ before_install:
 
     export INCLUDE="${VC2017_DIR}/include"
     # export INCLUDE="${VC2015_DIR}/include":$INCLUDE
+    export INCLUDE="${WIN10SDK_DIR}/Include/${UCRT_REV}/shared":$INCLUDE
     export INCLUDE="${WIN10SDK_DIR}/Include/${UCRT_REV}/ucrt":$INCLUDE
     export INCLUDE="${WIN10SDK_DIR}/Include/${UCRT_REV}/um":$INCLUDE
 
@@ -100,20 +101,22 @@ before_install:
     # ls "/c/Program Files (x86)/Microsoft Visual Studio 14.0/VC/lib/amd64"
     # echo "####/Windows Kits"
     # ls "/c/Program Files (x86)/Windows Kits"
-    echo "####/Windows Kits/10"
-    ls "/c/Program Files (x86)/Windows Kits/10"
-    echo "####/Windows Kits/10/Include"
-    ls "/c/Program Files (x86)/Windows Kits/10/Include"
-    echo "####/Windows Kits/10/Include/10.0.17134.0"
-    ls "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17134.0"
+    # echo "####/Windows Kits/10"
+    # ls "/c/Program Files (x86)/Windows Kits/10"
+    # echo "####/Windows Kits/10/Include"
+    # ls "/c/Program Files (x86)/Windows Kits/10/Include"
+    # echo "####/Windows Kits/10/Include/10.0.17134.0"
+    # ls "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17134.0"
+    echo "####/Windows Kits/10/Include/10.0.17134.0/shared"
+    ls "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17134.0/shared"
     # echo "####/Windows Kits/10/Include/10.0.17134.0/ucrt"
     # ls "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17134.0/ucrt"
     # echo "####/Windows Kits/10/Include/10.0.17134.0/um"
     # ls "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17134.0/um"
     # echo "####/Windows Kits/10/Lib"
     # ls "/c/Program Files (x86)/Windows Kits/10/Lib"
-    echo "####/Windows Kits/10/Lib/10.0.17134.0"
-    ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0"
+    # echo "####/Windows Kits/10/Lib/10.0.17134.0"
+    # ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0"
     # echo "####/Windows Kits/10/Lib/10.0.17134.0/ucrt"
     # ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0/ucrt"
     # echo "####/Windows Kits/10/Lib/10.0.17134.0/um"
