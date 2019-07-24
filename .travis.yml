@@ -59,7 +59,7 @@ before_script:
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
-    export BUILD_CMD="build.cmd"
+    export BUILD_CMD="cmd build.cmd"
   else
     export BUILD_CMD="rake test"
   fi
