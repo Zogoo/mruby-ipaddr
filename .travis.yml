@@ -86,7 +86,7 @@ matrix:
     - choco install winflexbison
     before_script:
     - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools:$PATH
+    - export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools/bin:$PATH
     - export YACC=win_bison
   - os: windows
     compiler: gcc
@@ -96,7 +96,7 @@ matrix:
     - choco install winflexbison
     before_script:
     - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools:$PATH
+    - export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools/bin:$PATH
     - export YACC=win_bison
   - os: windows
     compiler: clang
@@ -106,7 +106,7 @@ matrix:
     - choco install winflexbison
     before_script:
     - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools:$PATH
+    - export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools/bin:$PATH
     - export YACC=win_bison
   - os: windows
     compiler: clang
@@ -116,7 +116,7 @@ matrix:
     - choco install winflexbison
     before_script:
     - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools:$PATH
+    - export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools/bin:$PATH
     - export YACC=win_bison
   - os: windows
     compiler: vscpp
@@ -126,7 +126,7 @@ matrix:
     - choco install winflexbison
     before_script:
     - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools:$PATH
+    - export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools/bin:$PATH
     - export YACC=win_bison
   - os: windows
     compiler: vscpp
@@ -136,8 +136,9 @@ matrix:
     - choco install winflexbison
     before_script:
     - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools:$PATH
+    - export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools/bin:$PATH
     - export YACC=win_bison
+    - ls /c/ProgramData/chocolatey/lib/winflexbison/tools
 
 script:
 - echo MRUBY_TOOLCHAIN=$MRUBY_TOOLCHAIN
