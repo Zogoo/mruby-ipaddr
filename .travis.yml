@@ -41,18 +41,20 @@ addons:
 before_install:
 - |
   if [ "${TRAVIS_OS_NAME}" = "osx" ] && [ "${TRAVIS_COMPILER}" = "gcc" ]; then
-    ls "$(brew --prefix gcc)"
-    ls "$(brew --prefix gcc)/opt"
-    ls "$(brew --prefix gcc)/libexec"
+    ls -la "$(brew --prefix gcc)"
+    ls -la "$(brew --prefix gcc)/bin"
+    ls -la "$(brew --prefix gcc)/libexec/gcc"
+    ls -la "$(brew --prefix gcc)/libexec/gcc/bin"
     export CC=gcc-9
     export CXX=gcc-9
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ] && [ "${TRAVIS_COMPILER}" = "cl" ]; then
     export PATH=$PATH:"C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
-    ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC'
-    ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools'
-    ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC'
+    # ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC'
+    # ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools'
+    # ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC'
+    ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023'
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
