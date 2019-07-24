@@ -1,5 +1,30 @@
 language: c
 
+compiler:
+- gcc
+- clang
+- vscpp
+
+os:
+- linux
+- osx
+- windows
+
+env:
+  matrix:
+  - MRUBY_INT_SIZE=MRB_INT64
+  - MRUBY_INT_SIZE=MRB_INT32
+
+matrix:
+  exclude:
+  - os: linux
+    compiler: vscpp
+  - os: osx
+    compiler: vscpp
+
+dist: bionic
+osx_image: xcode11
+
 addons:
   apt:
     packages:
@@ -12,134 +37,31 @@ addons:
     - flex
     update: true
 
-matrix:
-  include:
-  - os: linux
-    dist: bionic
-    compiler: gcc
-    env:
-    - MRUBY_INT_SIZE=MRB_INT64
-    before_script:
-    - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-  - os: linux
-    dist: bionic
-    compiler: gcc
-    env:
-    - MRUBY_INT_SIZE=MRB_INT32
-    before_script:
-    - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-  - os: linux
-    dist: bionic
-    compiler: clang
-    env:
-    - MRUBY_INT_SIZE=MRB_INT64
-    before_script:
-    - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-  - os: linux
-    dist: bionic
-    compiler: clang
-    env:
-    - MRUBY_INT_SIZE=MRB_INT32
-    before_script:
-    - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-  - os: osx
-    osx_image: xcode11
-    compiler: gcc
-    before_install:
-    - brew install gcc@7
-    before_script:
-    - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export CC=gcc-7
-    - export CXX=gcc-7
-    env:
-    - MRUBY_INT_SIZE=MRB_INT64
-  - os: osx
-    osx_image: xcode11
-    compiler: gcc
-    before_install:
-    - brew install gcc@7
-    before_script:
-    - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export CC=gcc-7
-    - export CXX=gcc-7
-    env:
-    - MRUBY_INT_SIZE=MRB_INT32
-  - os: osx
-    osx_image: xcode11
-    compiler: clang
-    env:
-    - MRUBY_INT_SIZE=MRB_INT64
-    before_script:
-    - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-  - os: osx
-    osx_image: xcode11
-    compiler: clang
-    env:
-    - MRUBY_INT_SIZE=MRB_INT32
-    before_script:
-    - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-  - os: windows
-    compiler: gcc
-    env:
-    - MRUBY_INT_SIZE=MRB_INT64
-    before_install:
-    - choco install winflexbison
-    before_script:
-    - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export PATH=/c/tools/ruby25/bin:$PATH
-    - export YACC=/c/ProgramData/chocolatey/lib/winflexbison/tools/win_bison.exe
-  - os: windows
-    compiler: gcc
-    env:
-    - MRUBY_INT_SIZE=MRB_INT32
-    before_install:
-    - choco install winflexbison
-    before_script:
-    - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export PATH=/c/tools/ruby25/bin:$PATH
-    - export YACC=/c/ProgramData/chocolatey/lib/winflexbison/tools/win_bison.exe
-  - os: windows
-    compiler: clang
-    env:
-    - MRUBY_INT_SIZE=MRB_INT64
-    before_install:
-    - choco install winflexbison
-    before_script:
-    - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export PATH=/c/tools/ruby25/bin:$PATH
-    - export YACC=/c/ProgramData/chocolatey/lib/winflexbison/tools/win_bison.exe
-  - os: windows
-    compiler: clang
-    env:
-    - MRUBY_INT_SIZE=MRB_INT32
-    before_install:
-    - choco install winflexbison
-    before_script:
-    - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export PATH=/c/tools/ruby25/bin:$PATH
-    - export YACC=/c/ProgramData/chocolatey/lib/winflexbison/tools/win_bison.exe
-  - os: windows
-    compiler: vscpp
-    env:
-    - MRUBY_INT_SIZE=MRB_INT64
-    before_install:
-    - choco install winflexbison
-    before_script:
-    - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export PATH=/c/tools/ruby25/bin:$PATH
-    - export YACC=/c/ProgramData/chocolatey/lib/winflexbison/tools/win_bison.exe
-  - os: windows
-    compiler: vscpp
-    env:
-    - MRUBY_INT_SIZE=MRB_INT32
-    before_install:
-    - choco install winflexbison
-    before_script:
-    - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export PATH=/c/tools/ruby25/bin:$PATH
-    - export YACC=/c/ProgramData/chocolatey/lib/winflexbison/tools/win_bison.exe
+before_install:
+- |
+  if [ "${TRAVIS_OS_NAME}" = "osx" ]; then
+    brew install gcc@7
+  fi
+- |
+  if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
+    choco install winflexbison
+  fi
 
-script:
+before_script:
+- |
+  if [ "${TRAVIS_OS_NAME}" = "osx" ] && [ "${TRAVIS_COMPILER}" = "gcc" ]; then
+    export CC=gcc-7
+    export CXX=gcc-7
+  fi
+- |
+  if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
+    export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools:$PATH
+    cd /c/ProgramData/chocolatey/lib/winflexbison/tools
+    mklink bison.exe win_bison.exe
+  fi
+- export MRUBY_TOOLCHAIN=${TRAVIS_COMPILER}
 - echo MRUBY_TOOLCHAIN=$MRUBY_TOOLCHAIN
 - echo MRUBY_INT_SIZE=$MRUBY_INT_SIZE
+
+script:
 - rake test
