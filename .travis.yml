@@ -49,14 +49,13 @@ before_install:
     VS2017_DIR="${PROGRAM_DIR}/Microsoft Visual Studio/2017"
     VC2017_DIR="${VS2017_DIR}/BuildTools/VC/Tools/MSVC/${VC2017_REV}"
 
-    UCRT_INC_DIR="${PROGRAM_DIR}/Windows Kits/10/Include/${UCRT_REV}/ucrt"
-    UCRT_LIB_DIR="${PROGRAM_DIR}/Windows Kits/10/Lib/${UCRT_REV}/ucrt"
+    WIN10SDK_DIR="${PROGRAM_DIR}/Windows Kits/10"
 
     export PATH=$PATH:"${VC2017_DIR}/bin/Hostx64/x64"
     export INCLUDE="${VC2017_DIR}/include"
-    export INCLUDE="${UCRT_INC_DIR}"
+    export INCLUDE="${WIN10SDK_DIR}/Include/${UCRT_REV}/ucrt"
     export LIBPATH="${VC2017_DIR}/lib/x64"
-    export LIBPATH="${UCRT_LIB_DIR}"
+    export LIBPATH="${WIN10SDK_DIR}/Lib/${UCRT_REV}/ucrt"
 
     # echo "####"
     # ls "/c/Program Files (x86)"
