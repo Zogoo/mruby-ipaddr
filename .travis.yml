@@ -48,6 +48,9 @@ before_script:
 - git clone --branch ${MRUBY_BRANCH} --depth 1 ${MRUBY_REPOSITORY} mruby
 - |
   if [ "${TRAVIS_OS_NAME}" = "osx" ] && [ "${TRAVIS_COMPILER}" = "gcc" ]; then
+    ls "$(brew --prefix gcc)"
+    ls "$(brew --prefix gcc)/opt"
+    ls "$(brew --prefix gcc)/libexec"
     export CC=gcc-9
     export CXX=gcc-9
   fi
