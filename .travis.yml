@@ -55,7 +55,7 @@ before_install:
     export INCLUDE="${VC2017_DIR}/include"
     export INCLUDE="${WIN10SDK_DIR}/Include/${UCRT_REV}/ucrt"
     export LIBPATH="${VC2017_DIR}/lib/x64"
-    export LIBPATH="${WIN10SDK_DIR}/Lib/${UCRT_REV}/ucrt"
+    export LIBPATH="${WIN10SDK_DIR}/Lib/${UCRT_REV}/ucrt/x64"
 
     # echo "####"
     # ls "/c/Program Files (x86)"
@@ -81,8 +81,10 @@ before_install:
     # ls "/c/Program Files (x86)/Windows Kits/10/Lib"
     # echo "####/Windows Kits/10/Lib/10.0.17134.0"
     # ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0"
-    echo "####/Windows Kits/10/Lib/10.0.17134.0/ucrt"
-    ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0/ucrt"
+    # echo "####/Windows Kits/10/Lib/10.0.17134.0/ucrt"
+    # ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0/ucrt"
+    echo "####/Windows Kits/10/Lib/10.0.17134.0/ucrt/x64"
+    ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0/ucrt/x64"
     echo "####"
 
     choco install winflexbison
