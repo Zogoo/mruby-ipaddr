@@ -89,6 +89,8 @@ class IPAddr
     case other
     when IPAddr
       IPAddr.new_ntoh(IPAddr._op_and_ipaddr(@addr, other.hton))
+    when String
+      IPAddr.new_ntoh(IPAddr._op_and_ipaddr(@addr, self.class.new(other).hton))
     when Integer
       IPAddr.new_ntoh(IPAddr._op_and_integer(@addr, other))
     else
@@ -100,6 +102,8 @@ class IPAddr
     case other
     when IPAddr
       IPAddr.new_ntoh(IPAddr._op_or_ipaddr(@addr, other.hton))
+    when String
+      IPAddr.new_ntoh(IPAddr._op_or_ipaddr(@addr, self.class.new(other).hton))
     when Integer
       IPAddr.new_ntoh(IPAddr._op_or_integer(@addr, other))
     else
