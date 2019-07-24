@@ -30,11 +30,13 @@ addons:
     packages:
     - bison
     - flex
+    update: true
   homebrew:
     packages:
     - bison
     - flex
     - gcc@7
+    update: true
 
 before_install:
 - |
