@@ -13,4 +13,4 @@ unless File.exist?("#{ENV['MRUBY_ROOT']}/Rakefile")
 end
 
 # build
-import "#{ENV['MRUBY_ROOT']}/Rakefile"
+load "#{ENV['MRUBY_ROOT']}/Rakefile"
