@@ -1,103 +1,115 @@
 language: c
 
+compiler:
+- gcc
+- clang
+- cl
+
+os:
+- linux
+- osx
+- windows
+
+dist: bionic
+osx_image: xcode11
+
 matrix:
-  include:
+  # include:
+  # #
+  # # Linux - gcc
+  # #
+  # - os: linux
+  #   dist: bionic
+  #   compiler: gcc
+  #   env: MRUBY_INT_SIZE=MRB_INT64
+  # - os: linux
+  #   dist: bionic
+  #   compiler: gcc
+  #   env: MRUBY_INT_SIZE=MRB_INT32
   #
-  # Linux - gcc
+  # #
+  # # Linux - clang
+  # #
+  # - os: linux
+  #   dist: bionic
+  #   compiler: clang
+  #   env: MRUBY_INT_SIZE=MRB_INT64
+  # - os: linux
+  #   dist: bionic
+  #   compiler: clang
+  #   env: MRUBY_INT_SIZE=MRB_INT32
   #
+  # #
+  # # macOS - gcc
+  # #
+  # - os: osx
+  #   osx_image: xcode11
+  #   compiler: gcc
+  #   env: MRUBY_INT_SIZE=MRB_INT64
+  # - os: osx
+  #   osx_image: xcode11
+  #   compiler: gcc
+  #   env: MRUBY_INT_SIZE=MRB_INT32
+  #
+  # #
+  # # macOS - clang
+  # #
+  # - os: osx
+  #   osx_image: xcode11
+  #   compiler: clang
+  #   env: MRUBY_INT_SIZE=MRB_INT64
+  # - os: osx
+  #   osx_image: xcode11
+  #   compiler: clang
+  #   env: MRUBY_INT_SIZE=MRB_INT32
+  #
+  # #
+  # # Windows - gcc
+  # #
+  # - os: windows
+  #   compiler: gcc
+  #   env: MRUBY_INT_SIZE=MRB_INT64
+  # - os: windows
+  #   compiler: gcc
+  #   env: MRUBY_INT_SIZE=MRB_INT32
+  #
+  # #
+  # # Windows - clang
+  # #
+  # - os: windows
+  #   compiler: clang
+  #   env: MRUBY_INT_SIZE=MRB_INT64
+  # - os: windows
+  #   compiler: clang
+  #   env: MRUBY_INT_SIZE=MRB_INT32
+  #
+  # #
+  # # Windows - cl
+  # #
+  # - os: windows
+  #   compiler: cl
+  #   env: MRUBY_INT_SIZE=MRB_INT64
+  # - os: windows
+  #   compiler: cl
+  #   env: MRUBY_INT_SIZE=MRB_INT32
+  exclude:
   - os: linux
-    dist: bionic
-    compiler: gcc
-    env: MRUBY_INT_SIZE=MRB_INT64
-  - os: linux
-    dist: bionic
-    compiler: gcc
-    env: MRUBY_INT_SIZE=MRB_INT32
-
-  #
-  # Linux - clang
-  #
-  - os: linux
-    dist: bionic
-    compiler: clang
-    env: MRUBY_INT_SIZE=MRB_INT64
-  - os: linux
-    dist: bionic
-    compiler: clang
-    env: MRUBY_INT_SIZE=MRB_INT32
-
-  #
-  # macOS - gcc
-  #
-  - os: osx
-    osx_image: xcode11
-    compiler: gcc
-    env: MRUBY_INT_SIZE=MRB_INT64
-  - os: osx
-    osx_image: xcode11
-    compiler: gcc
-    env: MRUBY_INT_SIZE=MRB_INT32
-
-  #
-  # macOS - clang
-  #
-  - os: osx
-    osx_image: xcode11
-    compiler: clang
-    env: MRUBY_INT_SIZE=MRB_INT64
-  - os: osx
-    osx_image: xcode11
-    compiler: clang
-    env: MRUBY_INT_SIZE=MRB_INT32
-
-  #
-  # Windows - gcc
-  #
-  - os: windows
-    compiler: gcc
-    env: MRUBY_INT_SIZE=MRB_INT64
-  - os: windows
-    compiler: gcc
-    env: MRUBY_INT_SIZE=MRB_INT32
-
-  #
-  # Windows - clang
-  #
-  - os: windows
-    compiler: clang
-    env: MRUBY_INT_SIZE=MRB_INT64
-  - os: windows
-    compiler: clang
-    env: MRUBY_INT_SIZE=MRB_INT32
-
-  #
-  # Windows - cl
-  #
-  - os: windows
     compiler: cl
-    env: MRUBY_INT_SIZE=MRB_INT64
-  - os: windows
+  - os: osx
     compiler: cl
-    env: MRUBY_INT_SIZE=MRB_INT32
-
   allow_failures:
-  - os: osx
-    compiler: gcc
   - os: windows
     compiler: gcc
   - os: windows
     compiler: clang
-
-# addons:
-#   apt:
-#     packages:
-#     - bison
-#     - flex
 
 env:
   global:
   - MRUBY_REPOSITORY=https://github.com/mruby/mruby.git
   - MRUBY_BRANCH=master
+  matrix:
+  - MRUBY_INT_SIZE=MRB_INT64
+  - MRUBY_INT_SIZE=MRB_INT32
 
 before_install:
 - |
@@ -126,4 +138,5 @@ before_script:
 - echo MRUBY_INT_SIZE=$MRUBY_INT_SIZE
 
 script:
+- ruby mruby/minirake -f Rakefile -j 4 all
 - ruby mruby/minirake -f Rakefile -j 4 test
