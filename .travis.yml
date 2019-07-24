@@ -86,8 +86,8 @@ matrix:
     - choco install winflexbison
     before_script:
     - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools/bin:$PATH
-    - export YACC=win_bison
+    - export PATH=/c/tools/ruby25/bin:$PATH
+    - export YACC=/c/ProgramData/chocolatey/lib/winflexbison/tools/win_bison.exe
   - os: windows
     compiler: gcc
     env:
@@ -96,8 +96,8 @@ matrix:
     - choco install winflexbison
     before_script:
     - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools/bin:$PATH
-    - export YACC=win_bison
+    - export PATH=/c/tools/ruby25/bin:$PATH
+    - export YACC=/c/ProgramData/chocolatey/lib/winflexbison/tools/win_bison.exe
   - os: windows
     compiler: clang
     env:
@@ -106,8 +106,8 @@ matrix:
     - choco install winflexbison
     before_script:
     - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools/bin:$PATH
-    - export YACC=win_bison
+    - export PATH=/c/tools/ruby25/bin:$PATH
+    - export YACC=/c/ProgramData/chocolatey/lib/winflexbison/tools/win_bison.exe
   - os: windows
     compiler: clang
     env:
@@ -116,8 +116,8 @@ matrix:
     - choco install winflexbison
     before_script:
     - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools/bin:$PATH
-    - export YACC=win_bison
+    - export PATH=/c/tools/ruby25/bin:$PATH
+    - export YACC=/c/ProgramData/chocolatey/lib/winflexbison/tools/win_bison.exe
   - os: windows
     compiler: vscpp
     env:
@@ -126,8 +126,8 @@ matrix:
     - choco install winflexbison
     before_script:
     - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools/bin:$PATH
-    - export YACC=win_bison
+    - export PATH=/c/tools/ruby25/bin:$PATH
+    - export YACC=/c/ProgramData/chocolatey/lib/winflexbison/tools/win_bison.exe
   - os: windows
     compiler: vscpp
     env:
@@ -136,9 +136,8 @@ matrix:
     - choco install winflexbison
     before_script:
     - export MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
-    - export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools/bin:$PATH
-    - export YACC=win_bison
-    - ls /c/ProgramData/chocolatey/lib/winflexbison/tools
+    - export PATH=/c/tools/ruby25/bin:$PATH
+    - export YACC=/c/ProgramData/chocolatey/lib/winflexbison/tools/win_bison.exe
 
 script:
 - echo MRUBY_TOOLCHAIN=$MRUBY_TOOLCHAIN
