@@ -37,13 +37,6 @@ addons:
     packages:
     - bison
     - flex
-  #   update: true
-  # homebrew:
-  #   packages:
-  #   - bison
-  #   - flex
-  #   - gcc
-  #   update: true
 
 before_install:
 - |
@@ -58,10 +51,14 @@ before_install:
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ] && [ "${TRAVIS_COMPILER}" = "cl" ]; then
     export PATH=$PATH:"C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
-    echo '######## Hostx64'
-    ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin/Hostx64'
-    echo '######## Hostx86'
-    ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin/Hostx86'
+    echo '######## Hostx64/x64'
+    ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64'
+    echo '######## Hostx64/x86'
+    ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x86'
+    echo '######## Hostx86/x64'
+    ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x64'
+    echo '######## Hostx86/x86'
+    ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86'
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
