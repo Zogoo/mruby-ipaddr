@@ -5,23 +5,18 @@ compiler:
 - clang
 - cl
 
-os:
-- linux
-- osx
-- windows
-
-dist: bionic
-osx_image: xcode11
-
-env:
-  global:
-  - MRUBY_REPOSITORY=https://github.com/mruby/mruby.git
-  - MRUBY_BRANCH=master
-  matrix:
-  - MRUBY_INT_SIZE=MRB_INT64
-  - MRUBY_INT_SIZE=MRB_INT32
+# os:
+# - linux
+# - osx
+# - windows
 
 matrix:
+  include:
+  - os: linux
+    dist: bionic
+  - os: osx
+    osx_image: xcode11
+  - os: windows
   allow_failures:
   - os: osx
     compiler: gcc
@@ -40,6 +35,14 @@ matrix:
 #     packages:
 #     - bison
 #     - flex
+
+env:
+  global:
+  - MRUBY_REPOSITORY=https://github.com/mruby/mruby.git
+  - MRUBY_BRANCH=master
+  matrix:
+  - MRUBY_INT_SIZE=MRB_INT64
+  - MRUBY_INT_SIZE=MRB_INT32
 
 before_install:
 - |
