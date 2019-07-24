@@ -45,12 +45,8 @@ before_install:
     VC2017REV="14.16.27023"
     export PATH=$PATH:"${VS2017DIR}/BuildTools/MSBuild/15.0/Bin"
     export PATH=$PATH:"${VS2017DIR}/BuildTools/VC/Tools/MSVC/${VC2017REV}/bin/Hostx64/x64"
-    export INCLUDE=$INCLUDE:"${VS2017DIR}/BuildTools/VC/Tools/MSVC/${VC2017REV}/include"
-    export LIB=$LIB:"${VS2017DIR}/BuildTools/VC/Tools/MSVC/${VC2017REV}/lib/x64"
-    echo "####"
-    ls "${VS2017DIR}/BuildTools/VC/Tools/MSVC/${VC2017REV}/crt"
-    echo "####"
-    ls "${VS2017DIR}/BuildTools/VC/Tools/MSVC/${VC2017REV}/lib/x64"
+    export INCLUDE="${VS2017DIR}/BuildTools/VC/Tools/MSVC/${VC2017REV}/include"
+    export LIB="${VS2017DIR}/BuildTools/VC/Tools/MSVC/${VC2017REV}/lib/x64"
 
     choco install winflexbison
     WINFLEXBISON_DIR="/c/ProgramData/chocolatey/lib/winflexbison/tools"
