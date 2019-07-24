@@ -66,4 +66,4 @@ before_script:
 - echo MRUBY_INT_SIZE=$MRUBY_INT_SIZE
 
 script:
-- ruby -f mruby/Rakefile -j 4 test
+- ruby mruby/minirake -f Rakefile -j 4 test
