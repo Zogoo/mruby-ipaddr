@@ -55,6 +55,7 @@ before_script:
     export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools:$PATH
     cd /c/ProgramData/chocolatey/lib/winflexbison/tools
     ls
+    mklink bison.exe win_bison.exe
   fi
 - export MRUBY_TOOLCHAIN=${TRAVIS_COMPILER}
 - echo MRUBY_TOOLCHAIN=$MRUBY_TOOLCHAIN
