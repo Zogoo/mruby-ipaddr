@@ -14,7 +14,6 @@ env:
   global:
   - MRUBY_REPOSITORY=https://github.com/mruby/mruby.git
   - MRUBY_BRANCH=master
-  - MRUBY_TOOLCHAIN=${TRAVIS_COMPILER}
   matrix:
   - MRUBY_INT_SIZE=MRB_INT64
   - MRUBY_INT_SIZE=MRB_INT32
@@ -55,6 +54,7 @@ before_script:
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ] && [ "${TRAVIS_COMPILER}" = "cl" ]; then
     export PATH=$PATH:"C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
+    ls '/c/Program Files (x86)/Microsoft Visual Studio/2017'
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
@@ -63,6 +63,7 @@ before_script:
     export YACC="win_bison.exe"
     env
   fi
+- export MRUBY_TOOLCHAIN=${TRAVIS_COMPILER}
 - echo MRUBY_TOOLCHAIN=$MRUBY_TOOLCHAIN
 - echo MRUBY_INT_SIZE=$MRUBY_INT_SIZE
 
