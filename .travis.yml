@@ -109,7 +109,7 @@ before_install:
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
-    VS2017DIR=/c/Program Files (x86)/Microsoft Visual Studio/2017
+    VS2017DIR="/c/Program Files (x86)/Microsoft Visual Studio/2017"
     export PATH=$PATH:"${VS2017DIR}/BuildTools/MSBuild/15.0/Bin"
     export PATH=$PATH:"${VS2017DIR}/BuildTools/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64"
 
