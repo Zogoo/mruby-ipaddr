@@ -1,12 +1,5 @@
 language: c
 
-# addons:
-#   apt:
-#     packages:
-#     - bison
-#     - flex
-#     - rake
-
 matrix:
   include:
   - os: linux
@@ -32,6 +25,16 @@ matrix:
     compiler: clang
     env:
     - MRUBY_TOOLCHAIN=clang
+    - MRUBY_INT_SIZE=MRB_INT32
+  - os: osx
+    osx_image: xcode11
+    env:
+    - MRUBY_TOOLCHAIN=gcc
+    - MRUBY_INT_SIZE=MRB_INT64
+  - os: osx
+    osx_image: xcode11
+    env:
+    - MRUBY_TOOLCHAIN=gcc
     - MRUBY_INT_SIZE=MRB_INT32
 
 script:
