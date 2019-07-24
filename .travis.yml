@@ -48,6 +48,14 @@ before_install:
     export INCLUDE="${VS2017DIR}/BuildTools/VC/Tools/MSVC/${VC2017REV}/include"
     export LIB="${VS2017DIR}/BuildTools/VC/Tools/MSVC/${VC2017REV}/lib/x64"
 
+    echo "####"
+    ls "${VS2017DIR}/BuildTools/VC/Tools/MSVC/${VC2017REV}/bin/Hostx64/x64"
+    echo "####"
+    ls "${VS2017DIR}/BuildTools/VC/Tools/MSVC/${VC2017REV}/include"
+    echo "####"
+    ls "${VS2017DIR}/BuildTools/VC/Tools/MSVC/${VC2017REV}/lib/x64"
+    echo "####"
+
     choco install winflexbison
     WINFLEXBISON_DIR="/c/ProgramData/chocolatey/lib/winflexbison/tools"
     cp "${WINFLEXBISON_DIR}/win_bison.exe" "${WINFLEXBISON_DIR}/bison.exe"
