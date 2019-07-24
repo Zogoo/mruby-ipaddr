@@ -35,7 +35,7 @@ addons:
     packages:
     - bison
     - flex
-    - gcc@7
+    - gcc
     update: true
 
 before_install:
@@ -48,8 +48,8 @@ before_script:
 - git clone --branch ${MRUBY_BRANCH} --depth 1 ${MRUBY_REPOSITORY} mruby
 - |
   if [ "${TRAVIS_OS_NAME}" = "osx" ] && [ "${TRAVIS_COMPILER}" = "gcc" ]; then
-    export CC=gcc-7
-    export CXX=gcc-7
+    export CC=gcc-9
+    export CXX=gcc-9
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ] && [ "${TRAVIS_COMPILER}" = "cl" ]; then
