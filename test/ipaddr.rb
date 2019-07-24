@@ -147,8 +147,10 @@ assert('IPAddr#&', 'ipv4') do
   b = IPAddr.new('170.0.0.170')
   c = 123456789
   d = 123456789123456789
+  e = '170.0.0.170'
 
   assert_equal((a & b).to_s, "170.0.0.170")
+  assert_equal((a & e).to_s, "170.0.0.170")
 
   if c.is_a?(Integer)
     assert_equal((a & c).to_s, "2.81.69.0")
@@ -164,8 +166,10 @@ assert('IPAddr#&', 'ipv6') do
   b = IPAddr.new('a5a5:5a5a::5a5a:a5a5')
   c = 123456789
   d = 123456789123456789
+  e = 'a5a5:5a5a::5a5a:a5a5'
 
   assert_equal((a & b).to_s, "a0a0:5050::a0a:505")
+  assert_equal((a & e).to_s, "a0a0:5050::a0a:505")
 
   if c.is_a?(Integer)
     assert_equal((a & c).to_s, "::2.10.69.21")
@@ -185,8 +189,10 @@ assert('IPAddr#|', 'ipv4') do
   b = IPAddr.new('255.0.0.255')
   c = 123456789
   d = 123456789123456789
+  e = '255.0.0.255'
 
   assert_equal((a | b).to_s, "255.85.85.255")
+  assert_equal((a | e).to_s, "255.85.85.255")
 
   if c.is_a?(Integer)
     assert_equal((a | c).to_s, "175.95.221.191")
@@ -202,8 +208,10 @@ assert('IPAddr#|', 'ipv6') do
   b = IPAddr.new('a5a5:5a5a::5a5a:a5a5')
   c = 123456789
   d = 123456789123456789
+  e = 'a5a5:5a5a::5a5a:a5a5'
 
   assert_equal((a | b).to_s, "afaf:5f5f::fafa:f5f5")
+  assert_equal((a | e).to_s, "afaf:5f5f::fafa:f5f5")
 
   if c.is_a?(Integer)
     assert_equal((a | c).to_s, "aaaa:5555::affb:dd55")
