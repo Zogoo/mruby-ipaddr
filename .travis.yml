@@ -16,14 +16,16 @@ env:
   - MRUBY_INT_SIZE=MRB_INT32
 
 matrix:
+  include:
+  - os: linux
+    dist: bionic
+  - os: osx
+    osx_image: xcode11
   exclude:
   - os: linux
     compiler: vscpp
   - os: osx
     compiler: vscpp
-
-dist: bionic
-osx_image: xcode11
 
 addons:
   apt:
