@@ -54,8 +54,7 @@ before_script:
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
     export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools:$PATH
     cd /c/ProgramData/chocolatey/lib/winflexbison/tools
-    ls
-    mklink bison.exe win_bison.exe
+    cp win_bison.exe bison.exe
   fi
 - export MRUBY_TOOLCHAIN=${TRAVIS_COMPILER}
 - echo MRUBY_TOOLCHAIN=$MRUBY_TOOLCHAIN
