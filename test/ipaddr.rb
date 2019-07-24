@@ -141,11 +141,13 @@ end
 assert('IPAddr#&', 'ipv4') do
   a = IPAddr.new('170.85.85.170')
   assert_equal((a & 123456789).to_s,                 "2.81.69.0")
+  assert_equal((a & 123456789123456789).to_s,        "2.81.69.0")
   assert_equal((a & IPAddr.new('170.0.0.170')).to_s, "170.0.0.170")
 end
 
 assert('IPAddr#&', 'ipv6') do
   a = IPAddr.new('aaaa:5555::aaaa:5555')
   assert_equal((a & 123456789).to_s,                "::2.10.69.21")
+  assert_equal((a & 123456789123456789).to_s,       "::168.128.85.21")
   assert_equal((a & IPAddr.new('aaaa::5555')).to_s, "aaaa::5555")
 end
