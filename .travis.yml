@@ -37,17 +37,19 @@ addons:
     packages:
     - bison
     - flex
-    update: true
-  homebrew:
-    packages:
-    - bison
-    - flex
-    - gcc
-    update: true
+  #   update: true
+  # homebrew:
+  #   packages:
+  #   - bison
+  #   - flex
+  #   - gcc
+  #   update: true
 
 before_install:
 - |
   if [ "${TRAVIS_OS_NAME}" = "osx" ] && [ "${TRAVIS_COMPILER}" = "gcc" ]; then
+    brew update
+    brew install gcc
     ls -la "$(brew --prefix gcc)/libexec/gcc/x86_64-apple-darwin17"
     ls -la "$(brew --prefix gcc)/libexec/gcc/x86_64-apple-darwin17/bin"
     export CC=gcc-9
@@ -56,7 +58,10 @@ before_install:
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ] && [ "${TRAVIS_COMPILER}" = "cl" ]; then
     export PATH=$PATH:"C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
-    ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin'
+    echo '######## Hostx64'
+    ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin/Hostx64'
+    echo '######## Hostx86'
+    ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin/Hostx86'
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
