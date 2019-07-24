@@ -6,8 +6,8 @@ compiler:
 - cl
 
 os:
-- linux
-- osx
+# - linux
+# - osx
 - windows
 
 dist: bionic
@@ -48,9 +48,21 @@ before_install:
     export LIB="${VS2017DIR}/lib/x64"
 
     echo "####"
-    ls "${VS2017DIR}"
-    echo "####"
     ls "/c/Program Files (x86)"
+    echo "####/MSBuild"
+    ls "/c/Program Files (x86)/MSBuild"
+    echo "####/Microsoft SDKs"
+    ls "/c/Program Files (x86)/Microsoft SDKs"
+    echo "####/Microsoft Visual Studio"
+    ls "/c/Program Files (x86)/Microsoft Visual Studio"
+    echo "####/Microsoft Visual Studio 14.0"
+    ls "/c/Program Files (x86)/Microsoft Visual Studio 14.0"
+    echo "####/Windows Kits"
+    ls "/c/Program Files (x86)/Windows Kits"
+    echo "####/Windows Kits/10"
+    ls "/c/Program Files (x86)/Windows Kits/10"
+    echo "####/Windows Kits/10/Include"
+    ls "/c/Program Files (x86)/Windows Kits/10/Include"
     echo "####"
 
     choco install winflexbison
