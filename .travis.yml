@@ -1,17 +1,37 @@
-dist: bionic
 language: c
+
 compiler:
 - gcc
+- clang
+
 addons:
   apt:
     packages:
-    - make
-    - gcc
     - bison
     - flex
     - rake
-    - git
-    - curl
-    - ca-certificates
+
+matrix:
+  include:
+  - os: linux
+    dist: bionic
+    env:
+    - MRUBY_TOOLCHAIN=gcc
+    - MRUBY_INT_SIZE=MRB_INT64
+  - os: linux
+    dist: bionic
+    env:
+    - MRUBY_TOOLCHAIN=gcc
+    - MRUBY_INT_SIZE=MRB_INT32
+  - os: linux
+    dist: bionic
+    env:
+    - MRUBY_TOOLCHAIN=clang
+    - MRUBY_INT_SIZE=MRB_INT64
+  - os: linux
+    env:
+    - MRUBY_TOOLCHAIN=clang
+    - MRUBY_INT_SIZE=MRB_INT32
+
 script:
 - rake test
