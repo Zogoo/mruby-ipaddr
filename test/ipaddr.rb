@@ -151,9 +151,9 @@ end
 
 assert('IPAddr#&', 'ipv6') do
   a = IPAddr.new('aaaa:5555::aaaa:5555')
-  assert_equal((a & 123456789).to_s,                "::2.10.69.21")
-  assert_equal((a & 123456789123456789).to_s,       "::168.128.85.21")
-  assert_equal((a & IPAddr.new('aaaa::5555')).to_s, "aaaa::5555")
+  assert_equal((a & 123456789).to_s,                          "::2.10.69.21")
+  assert_equal((a & 123456789123456789).to_s,                 "::168.128.85.21")
+  assert_equal((a & IPAddr.new('a5a5:5a5a::5a5a:a5a5')).to_s, "a0a0:5050::a0a:505")
 end
 
 assert('IPAddr#|', 'ipv4') do
@@ -165,7 +165,7 @@ end
 
 assert('IPAddr#|', 'ipv6') do
   a = IPAddr.new('aaaa:5555::aaaa:5555')
-  assert_equal((a | 123456789).to_s,            "aaaa:5555::affb:dd55")
-  assert_equal((a | 123456789123456789).to_s,   "aaaa:5555::1b6:9b4b:aefa:5f55")
-  assert_equal((a | IPAddr.new('ffff::')).to_s, "ffff:5555::aaaa:5555")
+  assert_equal((a | 123456789).to_s,                          "aaaa:5555::affb:dd55")
+  assert_equal((a | 123456789123456789).to_s,                 "aaaa:5555::1b6:9b4b:aefa:5f55")
+  assert_equal((a | IPAddr.new('a5a5:5a5a::5a5a:a5a5')).to_s, "afaf:5f5f::fafa:f5f5")
 end
