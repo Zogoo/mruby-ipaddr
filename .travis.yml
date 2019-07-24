@@ -56,11 +56,13 @@ before_script:
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
+    echo '@echo off' > build.bat
+    echo 'rake test' > build.bat
     export PATH=$PATH:"C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
     export PATH=$PATH:"C:\ProgramData\chocolatey\lib\winflexbison\tools"
     export PATH=$PATH:"C:\tools\ruby25\bin"
     export YACC="win_bison.exe"
-    export BUILD_CMD="cmd /c rake test"
+    export BUILD_CMD="./build.bat"
   else
     export BUILD_CMD="rake test"
   fi
