@@ -119,11 +119,7 @@ class IPAddr
   end
 
   def ==(other)
-    if other.is_a? String
-      self.eql? IPAddr.new(other)
-    else
-      self.eql? other
-    end
+    self.eql? coerce_other(other)
   end
 
   #def ===(ipaddr)
@@ -199,6 +195,18 @@ class IPAddr
   end
 
   alias to_string to_s
+
+  # private
+  def coerce_other(other)
+    case other
+    when IPAddr
+      other
+    when String
+      self.class.new(other)
+    else
+      self.class.new(other, @family)
+    end
+  end
 
   # mruby extension
   def is_netaddr?(prefixlen)
