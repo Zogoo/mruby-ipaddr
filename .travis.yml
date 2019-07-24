@@ -55,7 +55,7 @@ before_script:
     export PATH=/c/tools/ruby25/bin:/c/ProgramData/chocolatey/lib/winflexbison/tools:$PATH
     cd /c/ProgramData/chocolatey/lib/winflexbison/tools
     cp win_bison.exe bison.exe
-    echo 'echo off && call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools"\VsDevCmd.bat -no_ext && rake test'>build.cmd
+    echo 'echo off && call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat" -no_ext && rake test'>build.cmd
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
