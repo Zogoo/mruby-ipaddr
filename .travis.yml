@@ -1,11 +1,11 @@
 language: c
 
-addons:
-  apt:
-    packages:
-    - bison
-    - flex
-    - rake
+# addons:
+#   apt:
+#     packages:
+#     - bison
+#     - flex
+#     - rake
 
 matrix:
   include:
