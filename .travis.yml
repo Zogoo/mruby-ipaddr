@@ -10,7 +10,6 @@ addons:
     packages:
     - bison
     - flex
-    - gcc
     update: true
 
 matrix:
@@ -42,13 +41,21 @@ matrix:
   - os: osx
     osx_image: xcode11
     compiler: gcc
+    install:
+    - brew install gcc
     env:
+    - CC=gcc-7
+    - CXX=gcc-7
     - MRUBY_TOOLCHAIN=gcc
     - MRUBY_INT_SIZE=MRB_INT64
   - os: osx
     osx_image: xcode11
     compiler: gcc
+    install:
+    - brew install gcc
     env:
+    - CC=gcc-7
+    - CXX=gcc-7
     - MRUBY_TOOLCHAIN=gcc
     - MRUBY_INT_SIZE=MRB_INT32
   - os: osx
@@ -73,4 +80,4 @@ matrix:
     - MRUBY_INT_SIZE=MRB_INT32
 
 script:
-- rake test
+- ruby mruby/minirake -f Rakefile -j 4 test
