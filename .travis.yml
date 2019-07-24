@@ -40,15 +40,6 @@ addons:
 
 before_install:
 - |
-  if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
-    choco install winflexbison
-    WINFLEXBISON_DIR="/c/ProgramData/chocolatey/lib/winflexbison/tools"
-    cp "${WINFLEXBISON_DIR}/win_bison.exe" "${WINFLEXBISON_DIR}/bison.exe"
-  fi
-
-before_script:
-- git clone --branch ${MRUBY_BRANCH} --depth 1 ${MRUBY_REPOSITORY} mruby
-- |
   if [ "${TRAVIS_OS_NAME}" = "osx" ] && [ "${TRAVIS_COMPILER}" = "gcc" ]; then
     ls "$(brew --prefix gcc)"
     ls "$(brew --prefix gcc)/opt"
@@ -65,8 +56,14 @@ before_script:
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
-    export PATH=$PATH:"C:\tools\ruby25\bin"
+    choco install winflexbison
+    WINFLEXBISON_DIR="/c/ProgramData/chocolatey/lib/winflexbison/tools"
+    cp "${WINFLEXBISON_DIR}/win_bison.exe" "${WINFLEXBISON_DIR}/bison.exe"
+    export PATH=$PATH:"/c/ProgramData/chocolatey/lib/winflexbison/tools"
   fi
+
+before_script:
+- git clone --branch ${MRUBY_BRANCH} --depth 1 ${MRUBY_REPOSITORY} mruby
 - export MRUBY_TOOLCHAIN=${TRAVIS_COMPILER}
 - echo MRUBY_TOOLCHAIN=$MRUBY_TOOLCHAIN
 - echo MRUBY_INT_SIZE=$MRUBY_INT_SIZE
