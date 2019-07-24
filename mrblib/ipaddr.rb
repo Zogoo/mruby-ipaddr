@@ -80,6 +80,11 @@ class IPAddr
     @mask
   end
 
+  # private
+  def _setmask(mask)
+    @mask = mask
+  end
+
   def &(other)
     case other
     when IPAddr
@@ -122,8 +127,14 @@ class IPAddr
     self.eql? coerce_other(other)
   end
 
-  #def ===(ipaddr)
-  #alias include? ===
+  def ===(ipaddr)
+    other = coerce_other(ipaddr)
+    other._setmask(@mask)
+    other._applymask
+    @addr == other.hton
+  end
+
+  alias include? ===
 
   def eql?(other)
     @addr == other.hton and @mask == other._mask and @family == other.family
