@@ -18,112 +18,113 @@ matrix:
     dist: bionic
     compiler: gcc
     env:
-    - MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
     - MRUBY_INT_SIZE=MRB_INT64
   - os: linux
     dist: bionic
     compiler: gcc
     env:
-    - MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
     - MRUBY_INT_SIZE=MRB_INT32
   - os: linux
     dist: bionic
     compiler: clang
     env:
-    - MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
     - MRUBY_INT_SIZE=MRB_INT64
   - os: linux
     dist: bionic
     compiler: clang
     env:
-    - MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
     - MRUBY_INT_SIZE=MRB_INT32
   - os: osx
     osx_image: xcode11
     compiler: gcc
-    install:
+    before_install:
     - brew install gcc@7
+    before_script:
+    - export CC=gcc-7
+    - export CXX=gcc-7
     env:
-    - MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
     - MRUBY_INT_SIZE=MRB_INT64
-    - CC=gcc-7
-    - CXX=gcc-7
   - os: osx
     osx_image: xcode11
     compiler: gcc
-    install:
+    before_install:
     - brew install gcc@7
+    before_script:
+    - export CC=gcc-7
+    - export CXX=gcc-7
     env:
-    - MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
     - MRUBY_INT_SIZE=MRB_INT32
-    - CC=gcc-7
-    - CXX=gcc-7
   - os: osx
     osx_image: xcode11
     compiler: clang
     env:
-    - MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
     - MRUBY_INT_SIZE=MRB_INT64
   - os: osx
     osx_image: xcode11
     compiler: clang
     env:
-    - MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
     - MRUBY_INT_SIZE=MRB_INT32
   - os: windows
     compiler: gcc
     env:
-    - MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
     - MRUBY_INT_SIZE=MRB_INT64
     before_install:
     - choco install winflexbison
+    - refreshenv
     before_script:
     - export PATH=/c/tools/ruby25/bin:$PATH
   - os: windows
     compiler: gcc
     env:
-    - MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
     - MRUBY_INT_SIZE=MRB_INT32
     before_install:
     - choco install winflexbison
+    - refreshenv
     before_script:
     - export PATH=/c/tools/ruby25/bin:$PATH
   - os: windows
     compiler: clang
     env:
-    - MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
     - MRUBY_INT_SIZE=MRB_INT64
     before_install:
     - choco install winflexbison
+    - refreshenv
     before_script:
     - export PATH=/c/tools/ruby25/bin:$PATH
   - os: windows
     compiler: clang
     env:
-    - MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
     - MRUBY_INT_SIZE=MRB_INT32
     before_install:
     - choco install winflexbison
+    - refreshenv
     before_script:
     - export PATH=/c/tools/ruby25/bin:$PATH
   - os: windows
     compiler: vscpp
     env:
-    - MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
     - MRUBY_INT_SIZE=MRB_INT64
     before_install:
     - choco install winflexbison
+    - refreshenv
     before_script:
     - export PATH=/c/tools/ruby25/bin:$PATH
   - os: windows
     compiler: vscpp
     env:
-    - MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
     - MRUBY_INT_SIZE=MRB_INT32
     before_install:
     - choco install winflexbison
+    - refreshenv
     before_script:
     - export PATH=/c/tools/ruby25/bin:$PATH
 
+env:
+  global:
+  - MRUBY_TOOLCHAIN=${CC_FOR_BUILD}
+
 script:
+- echo $CC
+- echo $MRUBY_TOOLCHAIN
+- echo $MRUBY_INT_SIZE
 - rake test
