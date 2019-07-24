@@ -36,6 +36,14 @@ matrix:
     env:
     - MRUBY_TOOLCHAIN=gcc
     - MRUBY_INT_SIZE=MRB_INT32
+  - os: windows
+    env:
+    - MRUBY_TOOLCHAIN=vscpp
+    - MRUBY_INT_SIZE=MRB_INT64
+  - os: windows
+    env:
+    - MRUBY_TOOLCHAIN=vscpp
+    - MRUBY_INT_SIZE=MRB_INT32
 
 script:
 - rake test
