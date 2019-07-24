@@ -43,8 +43,6 @@ before_install:
   if [ "${TRAVIS_OS_NAME}" = "osx" ] && [ "${TRAVIS_COMPILER}" = "gcc" ]; then
     brew update
     brew install gcc
-    ls -la "$(brew --prefix gcc)/libexec/gcc/x86_64-apple-darwin17"
-    ls -la "$(brew --prefix gcc)/libexec/gcc/x86_64-apple-darwin17/bin"
     export CC=gcc-9
     export CXX=gcc-9
   fi
@@ -61,7 +59,7 @@ before_install:
     choco install winflexbison
     WINFLEXBISON_DIR="/c/ProgramData/chocolatey/lib/winflexbison/tools"
     cp "${WINFLEXBISON_DIR}/win_bison.exe" "${WINFLEXBISON_DIR}/bison.exe"
-    export PATH=$PATH:"/c/ProgramData/chocolatey/lib/winflexbison/tools"
+    export PATH=$PATH:"${WINFLEXBISON_DIR}"
   fi
 
 before_script:
