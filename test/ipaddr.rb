@@ -141,8 +141,8 @@ end
 assert('IPAddr#&', 'ipv4') do
   a = IPAddr.new('170.85.85.170')
   assert_equal((a & 123456789).to_s,                 "2.81.69.0")
-  assert_equal((a & 123456789123456789).to_s,        "2.81.69.0")
   assert_equal((a & IPAddr.new('170.0.0.170')).to_s, "170.0.0.170")
+  assert_raise(ArgumentError) { a & 123456789123456789 }
 end
 
 assert('IPAddr#&', 'ipv6') do
