@@ -76,7 +76,11 @@ mrb_ipaddr_op_or_integer(mrb_state *mrb, mrb_value klass)
   } else {
     sbuf.u32[0] = sbuf.u32[0] | 0ul;
     sbuf.u32[1] = sbuf.u32[1] | 0ul;
+#if defined(MRB_INT64)
     sbuf.u32[2] = sbuf.u32[2] | (other >> 32);
+#else
+    sbuf.u32[2] = sbuf.u32[2] | 0ul;
+#endif
     sbuf.u32[3] = sbuf.u32[3] | other;
   }
 
@@ -132,7 +136,11 @@ mrb_ipaddr_op_and_integer(mrb_state *mrb, mrb_value klass)
   } else {
     sbuf.u32[0] = sbuf.u32[0] & 0ul;
     sbuf.u32[1] = sbuf.u32[1] & 0ul;
+#if defined(MRB_INT64)
     sbuf.u32[2] = sbuf.u32[2] & (other >> 32);
+#else
+    sbuf.u32[2] = sbuf.u32[2] & 0ul;
+#endif
     sbuf.u32[3] = sbuf.u32[3] & other;
   }
 
