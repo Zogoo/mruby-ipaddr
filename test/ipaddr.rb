@@ -169,3 +169,27 @@ assert('IPAddr#|', 'ipv6') do
   assert_equal((a | 123456789123456789).to_s,                 "aaaa:5555::1b6:9b4b:aefa:5f55")
   assert_equal((a | IPAddr.new('a5a5:5a5a::5a5a:a5a5')).to_s, "afaf:5f5f::fafa:f5f5")
 end
+
+assert('IPAddr#include?', 'ipv4') do
+  assert_equal(IPAddr.new('170.85.85.170').include?(IPAddr.new('170.85.85.170')), true)
+  assert_equal(IPAddr.new('170.85.85.170').include?(IPAddr.new('170.170.170.170')), false)
+  assert_equal(IPAddr.new('170.85.85.170').include?('170.85.85.170'), true)
+  assert_equal(IPAddr.new('170.85.85.170').include?('170.170.170.170'), false)
+
+  assert_equal(IPAddr.new('170.85.85.170/16').include?(IPAddr.new('170.85.85.170')), true)
+  assert_equal(IPAddr.new('170.85.85.170/16').include?(IPAddr.new('170.170.170.170')), false)
+  assert_equal(IPAddr.new('170.85.85.170/16').include?('170.85.85.170'), true)
+  assert_equal(IPAddr.new('170.85.85.170/16').include?('170.170.170.170'), false)
+end
+
+assert('IPAddr#include?', 'ipv6') do
+  assert_equal(IPAddr.new('aaaa::5555').include?(IPAddr.new('aaaa::5555')), true)
+  assert_equal(IPAddr.new('aaaa::5555').include?(IPAddr.new('5555::aaaa')), false)
+  assert_equal(IPAddr.new('aaaa::5555').include?('aaaa::5555'), true)
+  assert_equal(IPAddr.new('aaaa::5555').include?('5555::aaaa'), false)
+
+  assert_equal(IPAddr.new('aaaa::5555/64').include?(IPAddr.new('aaaa::5555')), true)
+  assert_equal(IPAddr.new('aaaa::5555/64').include?(IPAddr.new('5555::aaaa')), false)
+  assert_equal(IPAddr.new('aaaa::5555/64').include?('aaaa::5555'), true)
+  assert_equal(IPAddr.new('aaaa::5555/64').include?('5555::aaaa'), false)
+end
