@@ -30,6 +30,62 @@ copy_ntohl_ip_addr_buffer(union ip_addr *buf)
 }
 
 static mrb_value
+mrb_ipaddr_op_or_ipaddr(mrb_state *mrb, mrb_value klass)
+{
+  mrb_int slen, olen;
+  uint8_t *self, *other;
+  union ip_addr sbuf = {0}, obuf = {0};
+
+  mrb_get_args(mrb, "ss", (char *)&self, &slen, (char *)&other, &olen);
+
+  if (slen != 4 && slen != 16 && olen != 4 && olen != 16) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "invalid address");
+  }
+
+  copy_htonl_ip_addr_buffer(&sbuf, slen, self);
+  copy_htonl_ip_addr_buffer(&obuf, olen, other);
+
+  for (int i = 0; i < 4; i++) {
+    sbuf.u32[i] = ntohl(sbuf.u32[i] | obuf.u32[i]);
+  }
+
+  return mrb_str_new(mrb, (char *)&sbuf.raw, slen);
+}
+
+static mrb_value
+mrb_ipaddr_op_or_integer(mrb_state *mrb, mrb_value klass)
+{
+  mrb_int slen, other;
+  uint8_t *self;
+  union ip_addr sbuf = {0};
+
+  mrb_get_args(mrb, "si", (char *)&self, &slen, &other);
+
+  if (slen != 4 && slen != 16) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "invalid address");
+  }
+
+  if (slen == 4 && other > UINT32_MAX) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "invalid address");
+  }
+
+  copy_htonl_ip_addr_buffer(&sbuf, slen, self);
+
+  if (slen == 4) {
+    sbuf.u32[0] = sbuf.u32[0] | other;
+  } else {
+    sbuf.u32[0] = sbuf.u32[0] | 0ul;
+    sbuf.u32[1] = sbuf.u32[1] | 0ul;
+    sbuf.u32[2] = sbuf.u32[2] | (other >> 32);
+    sbuf.u32[3] = sbuf.u32[3] | other;
+  }
+
+  copy_ntohl_ip_addr_buffer(&sbuf);
+
+  return mrb_str_new(mrb, (char *)&sbuf.raw, slen);
+}
+
+static mrb_value
 mrb_ipaddr_op_and_ipaddr(mrb_state *mrb, mrb_value klass)
 {
   mrb_int slen, olen;
@@ -76,7 +132,7 @@ mrb_ipaddr_op_and_integer(mrb_state *mrb, mrb_value klass)
   } else {
     sbuf.u32[0] = sbuf.u32[0] & 0ul;
     sbuf.u32[1] = sbuf.u32[1] & 0ul;
-    sbuf.u32[2] = sbuf.u32[2] & 0ul;
+    sbuf.u32[2] = sbuf.u32[2] & (other >> 32);
     sbuf.u32[3] = sbuf.u32[3] & other;
   }
 
@@ -255,6 +311,8 @@ mrb_mruby_ipaddr_gem_init(mrb_state *mrb)
   mrb_define_class_method(mrb, c, "_right_shift", mrb_ipaddr_right_shift, MRB_ARGS_REQ(1));
   mrb_define_class_method(mrb, c, "_op_and_ipaddr", mrb_ipaddr_op_and_ipaddr, MRB_ARGS_REQ(1));
   mrb_define_class_method(mrb, c, "_op_and_integer", mrb_ipaddr_op_and_integer, MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb, c, "_op_or_ipaddr", mrb_ipaddr_op_or_ipaddr, MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb, c, "_op_or_integer", mrb_ipaddr_op_or_integer, MRB_ARGS_REQ(1));
 }
 
 void
