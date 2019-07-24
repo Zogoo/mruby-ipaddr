@@ -59,7 +59,7 @@ before_script:
     export PATH=$PATH:"C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
     export PATH=$PATH:"C:\ProgramData\chocolatey\lib\winflexbison\tools"
     export PATH=$PATH:"C:\tools\ruby25\bin"
-    export YACC=$PATH:"C:\ProgramData\chocolatey\lib\winflexbison\tools\win_bison.exe"
+    export YACC="win_bison.exe"
     export BUILD_CMD="cmd /c rake test"
   else
     export BUILD_CMD="rake test"
