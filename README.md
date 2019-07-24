@@ -9,7 +9,7 @@
 ## Limitation
 
 - Some methods are missing:
-  #& #in6\_arpa #ip6\_int #ipv4\_compat? #ipv4\_mapped #ipv4\_mapped?
+  #in6\_arpa #ip6\_int #ipv4\_compat? #ipv4\_mapped #ipv4\_mapped?
   #mask! #native #reverse #set #succ #to\_i #to\_range #|
 - Conversion from/to Integer is not supported.
 
