@@ -65,6 +65,10 @@ mrb_ipaddr_op_and_integer(mrb_state *mrb, mrb_value klass)
     mrb_raise(mrb, E_ARGUMENT_ERROR, "invalid address");
   }
 
+  if (slen == 4 && other > UINT32_MAX) {
+    mrb_raise(mrb, E_ARGUMENT_ERROR, "invalid address");
+  }
+
   copy_htonl_ip_addr_buffer(&sbuf, slen, self);
 
   if (slen == 4) {
