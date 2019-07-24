@@ -1,6 +1,6 @@
 MRuby::Build.new do |conf|
   case ENV['MRUBY_TOOLCHAIN']
-  when 'vscpp'
+  when 'cl'
     toolchain :visualcpp
   when 'clang'
     toolchain :clang

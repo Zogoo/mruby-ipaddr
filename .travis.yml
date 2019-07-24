@@ -3,7 +3,7 @@ language: c
 compiler:
 - gcc
 - clang
-- vscpp
+- cl
 
 os:
 - linux
@@ -21,9 +21,9 @@ env:
 matrix:
   exclude:
   - os: linux
-    compiler: vscpp
+    compiler: cl
   - os: osx
-    compiler: vscpp
+    compiler: cl
 
 addons:
   apt:
@@ -60,6 +60,7 @@ before_script:
     export PATH=$PATH:"C:\ProgramData\chocolatey\lib\winflexbison\tools"
     export PATH=$PATH:"C:\tools\ruby25\bin"
     export YACC="win_bison.exe"
+    env
   fi
 - export MRUBY_TOOLCHAIN=${TRAVIS_COMPILER}
 - echo MRUBY_TOOLCHAIN=$MRUBY_TOOLCHAIN
