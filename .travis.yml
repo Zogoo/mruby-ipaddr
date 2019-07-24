@@ -70,54 +70,54 @@ matrix:
     - MRUBY_INT_SIZE=MRB_INT64
     before_install:
     - choco install winflexbison
-    - refreshenv
     before_script:
     - export PATH=/c/tools/ruby25/bin:$PATH
+    - export YACC=win_bison
   - os: windows
     compiler: gcc
     env:
     - MRUBY_INT_SIZE=MRB_INT32
     before_install:
     - choco install winflexbison
-    - refreshenv
     before_script:
     - export PATH=/c/tools/ruby25/bin:$PATH
+    - export YACC=win_bison
   - os: windows
     compiler: clang
     env:
     - MRUBY_INT_SIZE=MRB_INT64
     before_install:
     - choco install winflexbison
-    - refreshenv
     before_script:
     - export PATH=/c/tools/ruby25/bin:$PATH
+    - export YACC=win_bison
   - os: windows
     compiler: clang
     env:
     - MRUBY_INT_SIZE=MRB_INT32
     before_install:
     - choco install winflexbison
-    - refreshenv
     before_script:
     - export PATH=/c/tools/ruby25/bin:$PATH
+    - export YACC=win_bison
   - os: windows
     compiler: vscpp
     env:
     - MRUBY_INT_SIZE=MRB_INT64
     before_install:
     - choco install winflexbison
-    - refreshenv
     before_script:
     - export PATH=/c/tools/ruby25/bin:$PATH
+    - export YACC=win_bison
   - os: windows
     compiler: vscpp
     env:
     - MRUBY_INT_SIZE=MRB_INT32
     before_install:
     - choco install winflexbison
-    - refreshenv
     before_script:
     - export PATH=/c/tools/ruby25/bin:$PATH
+    - export YACC=win_bison
 
 env:
   global:
