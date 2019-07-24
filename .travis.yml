@@ -19,6 +19,13 @@ env:
   - MRUBY_INT_SIZE=MRB_INT32
 
 matrix:
+  allow_failures:
+  - os: osx
+    compiler: gcc
+  - os: windows
+    compiler: gcc
+  - os: windows
+    compiler: clang
   exclude:
   - os: linux
     compiler: cl
@@ -41,20 +48,15 @@ addons:
 before_install:
 - |
   if [ "${TRAVIS_OS_NAME}" = "osx" ] && [ "${TRAVIS_COMPILER}" = "gcc" ]; then
-    ls -la "$(brew --prefix gcc)"
-    ls -la "$(brew --prefix gcc)/bin"
-    ls -la "$(brew --prefix gcc)/libexec/gcc"
-    ls -la "$(brew --prefix gcc)/libexec/gcc/bin"
+    ls -la "$(brew --prefix gcc)/libexec/gcc/x86_64-apple-darwin17"
+    ls -la "$(brew --prefix gcc)/libexec/gcc/x86_64-apple-darwin17/bin"
     export CC=gcc-9
     export CXX=gcc-9
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ] && [ "${TRAVIS_COMPILER}" = "cl" ]; then
     export PATH=$PATH:"C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
-    # ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC'
-    # ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools'
-    # ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC'
-    ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023'
+    ls '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin'
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
