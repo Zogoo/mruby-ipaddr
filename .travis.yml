@@ -41,11 +41,22 @@ before_install:
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
-    VS2017DIR="/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023"
+    VC2017_REV="14.16.27023"
+    UCRT_REV="10.0.17134.0"
 
-    export PATH=$PATH:"${VS2017DIR}/bin/Hostx64/x64"
-    export INCLUDE="${VS2017DIR}/include"
-    export LIB="${VS2017DIR}/lib/x64"
+    PROGRAM_DIR="/c/Program Files (x86)"
+
+    VS2017_DIR="${PROGRAM_DIR}/Microsoft Visual Studio/2017"
+    VC2017_DIR="${VS2017_DIR}/BuildTools/VC/Tools/MSVC/${VC2017_REV}"
+
+    UCRT_INC_DIR="${PROGRAM_DIR}/Windows Kits/10/Include/${UCRT_REV}/ucrt"
+    UCRT_LIB_DIR="${PROGRAM_DIR}/Windows Kits/10/Lib/${UCRT_REV}/ucrt"
+
+    export PATH=$PATH:"${VC2017_DIR}/bin/Hostx64/x64"
+    export INCLUDE="${VC2017_DIR}/include"
+    export INCLUDE="${UCRT_INC_DIR}"
+    export LIBPATH="${VC2017_DIR}/lib/x64"
+    export LIBPATH="${UCRT_LIB_DIR}"
 
     # echo "####"
     # ls "/c/Program Files (x86)"
@@ -65,12 +76,14 @@ before_install:
     # ls "/c/Program Files (x86)/Windows Kits/10/Include"
     # echo "####/Windows Kits/10/Include/10.0.17134.0"
     # ls "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17134.0"
-    echo "####/Windows Kits/10/Include/10.0.17134.0/ucrt"
-    ls "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17134.0/ucrt"
+    # echo "####/Windows Kits/10/Include/10.0.17134.0/ucrt"
+    # ls "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17134.0/ucrt"
     # echo "####/Windows Kits/10/Lib"
     # ls "/c/Program Files (x86)/Windows Kits/10/Lib"
-    echo "####/Windows Kits/10/Lib/10.0.17134.0"
-    ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0"
+    # echo "####/Windows Kits/10/Lib/10.0.17134.0"
+    # ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0"
+    echo "####/Windows Kits/10/Lib/10.0.17134.0/ucrt"
+    ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0/ucrt"
     echo "####"
 
     choco install winflexbison
