@@ -40,11 +40,6 @@ before_install:
     export CXX=gcc-9
   fi
 - |
-  if [ "${TRAVIS_OS_NAME}" = "windows" ] && [ "${TRAVIS_COMPILER}" = "cl" ]; then
-    export CFLAGS="/c /nologo /W3 /we4013 /Zi /FS /MD /O2 /D_CRT_SECURE_NO_WARNINGS"
-    export CXXFLAGS="/c /nologo /W3 /Zi /FS /MD /O2 /EHs /D_CRT_SECURE_NO_WARNINGS"
-  fi
-- |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
     VC2017_REV="14.16.27023"
     UCRT_REV="10.0.17134.0"
@@ -54,25 +49,18 @@ before_install:
     VS2017_DIR="${PROGRAM_DIR}/Microsoft Visual Studio/2017"
     VC2017_DIR="${VS2017_DIR}/BuildTools/VC/Tools/MSVC/${VC2017_REV}"
 
-    # VS2015_DIR="${PROGRAM_DIR}/Microsoft Visual Studio 14.0"
-    # VC2015_DIR="${VS2015_DIR}/VC"
-
     WIN10SDK_DIR="${PROGRAM_DIR}/Windows Kits/10"
 
     export PATH=$PATH:"${VC2017_DIR}/bin/Hostx64/x64"
 
     export INCLUDE="${VC2017_DIR}/include"
-    # export INCLUDE="${VC2015_DIR}/include":$INCLUDE
     export INCLUDE="${WIN10SDK_DIR}/Include/${UCRT_REV}/shared":$INCLUDE
     export INCLUDE="${WIN10SDK_DIR}/Include/${UCRT_REV}/ucrt":$INCLUDE
     export INCLUDE="${WIN10SDK_DIR}/Include/${UCRT_REV}/um":$INCLUDE
 
     export LIBPATH="${VC2017_DIR}/lib/x64"
-    # export LIBPATH="${VC2015_DIR}/lib/amd64":$LIBPATH
     export LIBPATH="${WIN10SDK_DIR}/Lib/${UCRT_REV}/ucrt/x64":$LIBPATH
     export LIBPATH="${WIN10SDK_DIR}/Lib/${UCRT_REV}/um/x64":$LIBPATH
-
-    cmd /c 'where /r "C:\Program Files (x86)" m.lib'
 
     # echo "####"
     # ls "/c/Program Files (x86)"
