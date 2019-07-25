@@ -42,7 +42,10 @@ mrb_ipaddr_op_or_ipaddr(mrb_state *mrb, mrb_value klass)
 {
   mrb_int slen, olen;
   uint8_t *self, *other;
-  union ip_addr sbuf = {}, obuf = {};
+  union ip_addr sbuf, obuf;
+
+  memset(sbuf.raw, 0, 16);
+  memset(obuf.raw, 0, 16);
 
   mrb_get_args(mrb, "ss", (char *)&self, &slen, (char *)&other, &olen);
 
@@ -65,7 +68,9 @@ mrb_ipaddr_op_or_integer(mrb_state *mrb, mrb_value klass)
 {
   mrb_int slen, other;
   uint8_t *self;
-  union ip_addr sbuf = {};
+  union ip_addr sbuf;
+
+  memset(sbuf.raw, 0, 16);
 
   mrb_get_args(mrb, "si", (char *)&self, &slen, &other);
 
@@ -102,7 +107,10 @@ mrb_ipaddr_op_and_ipaddr(mrb_state *mrb, mrb_value klass)
 {
   mrb_int slen, olen;
   uint8_t *self, *other;
-  union ip_addr sbuf = {}, obuf = {};
+  union ip_addr sbuf, obuf;
+
+  memset(sbuf.raw, 0, 16);
+  memset(obuf.raw, 0, 16);
 
   mrb_get_args(mrb, "ss", (char *)&self, &slen, (char *)&other, &olen);
 
@@ -125,7 +133,9 @@ mrb_ipaddr_op_and_integer(mrb_state *mrb, mrb_value klass)
 {
   mrb_int slen, other;
   uint8_t *self;
-  union ip_addr sbuf = {};
+  union ip_addr sbuf;
+
+  memset(sbuf.raw, 0, 16);
 
   mrb_get_args(mrb, "si", (char *)&self, &slen, &other);
 
@@ -162,7 +172,9 @@ mrb_ipaddr_right_shift(mrb_state *mrb, mrb_value klass)
 {
   mrb_int num, n;
   uint8_t *src;
-  union ip_addr buf = {};
+  union ip_addr buf;
+
+  memset(buf.raw, 0, 16);
 
   mrb_get_args(mrb, "is", &num, (char *)&src, &n);
 
@@ -216,7 +228,9 @@ mrb_ipaddr_left_shift(mrb_state *mrb, mrb_value klass)
 {
   mrb_int num, n;
   unsigned char *src;
-  union ip_addr buf = {};
+  union ip_addr buf;
+
+  memset(buf.raw, 0, 16);
 
   mrb_get_args(mrb, "is", &num, (char *)&src, &n);
 
