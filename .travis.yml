@@ -51,9 +51,9 @@ before_install:
     echo 'echo.'                                                                     >> vs2017_rake.cmd
     echo 'rake %*'                                                                   >> vs2017_rake.cmd
 
-    export RAKE="cmd //c vs2017_rake.cmd"
+    export RAKE='cmd //c vs2017_rake.cmd -E $stdout.sync=true'
   else
-    export RAKE="rake"
+    export RAKE='rake -E $stdout.sync=true'
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "osx" ] && [ "${TRAVIS_COMPILER}" = "gcc" ]; then
