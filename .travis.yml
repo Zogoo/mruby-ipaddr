@@ -35,6 +35,12 @@ env:
 
 before_install:
 - |
+  if [ "${TRAVIS_OS_NAME}" = "windows" ] && [ "${TRAVIS_COMPILER}" = "cl" ]; then
+    export PARALLEL=1
+  else
+    export PARALLEL=4
+  fi
+- |
   if [ "${TRAVIS_OS_NAME}" = "osx" ] && [ "${TRAVIS_COMPILER}" = "gcc" ]; then
     export CC=gcc-9
     export CXX=gcc-9
@@ -135,5 +141,5 @@ before_script:
 - echo MRUBY_INT_SIZE=$MRUBY_INT_SIZE
 
 script:
-- ruby mruby/minirake -f Rakefile -j 4 all
-- ruby mruby/minirake -f Rakefile -j 4 test
+- ruby mruby/minirake -f Rakefile -j ${PARALLEL} all
+- ruby mruby/minirake -f Rakefile -j ${PARALLEL} test
