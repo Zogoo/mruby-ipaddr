@@ -19,8 +19,8 @@ env:
   - MRUBY_BRANCH=master
   matrix:
   - MRUBY_INT_SIZE=MRB_INT64
-  - MRUBY_INT_SIZE=MRB_INT32
-  - MRUBY_INT_SIZE=MRB_INT16
+  # - MRUBY_INT_SIZE=MRB_INT32
+  # - MRUBY_INT_SIZE=MRB_INT16
 
 matrix:
   exclude:
