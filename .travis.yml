@@ -33,6 +33,8 @@ matrix:
     compiler: gcc
   - os: windows
     compiler: clang
+  - os: windows
+    compiler: cl
   - env: MRUBY_INT_SIZE=MRB_INT16
 
 cache:
