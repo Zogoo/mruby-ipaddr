@@ -42,18 +42,18 @@ before_install:
     WINFLEXBISON_DIR="/c/ProgramData/chocolatey/lib/winflexbison/tools"
     cp "${WINFLEXBISON_DIR}/win_bison.exe" "${WINFLEXBISON_DIR}/bison.exe"
 
-    echo '@echo off'                                                                 >  build.cmd
-    echo 'set PATH=%ChocolateyInstall%\lib\winflexbison\tools;%PATH%'                >> build.cmd
-    echo 'set VS2017=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\BuildTools'    >> build.cmd
-    echo 'call "%VS2017%\VC\Auxiliary\Build\vcvars64.bat"'                           >> build.cmd
-    echo 'echo.'                                                                     >> build.cmd
-    echo 'echo rake %*'                                                              >> build.cmd
-    echo 'echo.'                                                                     >> build.cmd
-    echo 'rake %*'                                                                   >> build.cmd
+    echo '@echo off'                                                                 >  vs2017_rake.cmd
+    echo 'set PATH=%ChocolateyInstall%\lib\winflexbison\tools;%PATH%'                >> vs2017_rake.cmd
+    echo 'set VS2017=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\BuildTools'    >> vs2017_rake.cmd
+    echo 'call "%VS2017%\VC\Auxiliary\Build\vcvars64.bat"'                           >> vs2017_rake.cmd
+    echo 'echo.'                                                                     >> vs2017_rake.cmd
+    echo 'echo rake %*'                                                              >> vs2017_rake.cmd
+    echo 'echo.'                                                                     >> vs2017_rake.cmd
+    echo 'rake %*'                                                                   >> vs2017_rake.cmd
 
-    export RAKE_COMMAND="cmd //c build.cmd"
+    export RAKE="cmd //c vs2017_rake.cmd"
   else
-    export RAKE_COMMAND="rake"
+    export RAKE="rake"
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "osx" ] && [ "${TRAVIS_COMPILER}" = "gcc" ]; then
@@ -66,8 +66,8 @@ before_script:
 - export MRUBY_TOOLCHAIN=${TRAVIS_COMPILER}
 - echo MRUBY_TOOLCHAIN=$MRUBY_TOOLCHAIN
 - echo MRUBY_INT_SIZE=$MRUBY_INT_SIZE
-- echo RAKE_COMMAND=$RAKE_COMMAND
+- echo RAKE=$RAKE
 
 script:
-- $RAKE_COMMAND all
-- $RAKE_COMMAND test
+- $RAKE all
+- $RAKE test
