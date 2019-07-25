@@ -42,16 +42,16 @@ before_install:
     WINFLEXBISON_DIR="/c/ProgramData/chocolatey/lib/winflexbison/tools"
     cp "${WINFLEXBISON_DIR}/win_bison.exe" "${WINFLEXBISON_DIR}/bison.exe"
 
-    echo '@echo off'                                                              >  rake.cmd
-    echo 'set PATH=%ChocolateyInstall%\lib\winflexbison\tools;%PATH%'             >> rake.cmd
-    echo 'set VS2017=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\BuildTools' >> rake.cmd
-    echo 'call "%VS2017%\VC\Auxiliary\Build\vcvars64.bat"'                        >> rake.cmd
-    echo 'echo.'                                                                  >> rake.cmd
-    echo 'echo rake %*'                                                           >> rake.cmd
-    echo 'echo.'                                                                  >> rake.cmd
-    echo 'rake %*'                                                                >> rake.cmd
+    echo '@echo off'                                                                 >  build.cmd
+    echo 'set PATH=%ChocolateyInstall%\lib\winflexbison\tools;%PATH%'                >> build.cmd
+    echo 'set VS2017=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\BuildTools'    >> build.cmd
+    echo 'call "%VS2017%\VC\Auxiliary\Build\vcvars64.bat"'                           >> build.cmd
+    echo 'echo.'                                                                     >> build.cmd
+    echo 'echo rake %*'                                                              >> build.cmd
+    echo 'echo.'                                                                     >> build.cmd
+    echo 'rake %*'                                                                   >> build.cmd
 
-    export RAKE_COMMAND="cmd //c rake.cmd"
+    export RAKE_COMMAND="cmd //c build.cmd"
   else
     export RAKE_COMMAND="rake"
   fi
