@@ -38,41 +38,27 @@ matrix:
 before_install:
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
-    export BUILD_COMMAND="cmd //c build.bat"
-    export TEST_COMMAND="cmd //c test.bat"
+    choco install winflexbison
+    WINFLEXBISON_DIR="/c/ProgramData/chocolatey/lib/winflexbison/tools"
+    cp "${WINFLEXBISON_DIR}/win_bison.exe" "${WINFLEXBISON_DIR}/bison.exe"
+
+    echo '@echo off'                                                              >  rake.cmd
+    echo 'set PATH=%ChocolateyInstall%\lib\winflexbison\tools;%PATH%'             >> rake.cmd
+    echo 'set VS2017=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\BuildTools' >> rake.cmd
+    echo 'call "%VS2017%\VC\Auxiliary\Build\vcvars64.bat"'                        >> rake.cmd
+    echo 'echo.'                                                                  >> rake.cmd
+    echo 'echo rake %*'                                                           >> rake.cmd
+    echo 'echo.'                                                                  >> rake.cmd
+    echo 'rake %*'                                                                >> rake.cmd
+
+    export RAKE_COMMAND="cmd //c rake.cmd"
   else
-    export BUILD_COMMAND="rake all"
-    export TEST_COMMAND="rake test"
+    export RAKE_COMMAND="rake"
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "osx" ] && [ "${TRAVIS_COMPILER}" = "gcc" ]; then
     export CC=gcc-9
     export CXX=gcc-9
-  fi
-- |
-  if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
-    echo '@echo off' > build.bat
-    # echo 'call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"' >> build.bat
-    echo 'call "%VCINSTALLDIR%\Auxiliary\Build\vcvars64.bat"' >> build.bat
-    # echo 'set PATH=C:\ProgramData\chocolatey\lib\winflexbison\tools;%PATH%' >> build.bat
-    echo 'set PATH=%ChocolateyInstall%\lib\winflexbison\tools;%PATH%' >> build.bat
-    echo 'echo.' >> test.bat
-    echo 'echo rake all' >> test.bat
-    echo 'echo.' >> test.bat
-    echo 'rake all' >> build.bat
-
-    echo '@echo off' > test.bat
-    echo 'call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"' >> test.bat
-    echo 'set PATH=C:\ProgramData\chocolatey\lib\winflexbison\tools;%PATH%' >> test.bat
-    echo 'echo.' >> test.bat
-    echo 'echo rake test' >> test.bat
-    echo 'echo.' >> test.bat
-    echo 'rake test' >> test.bat
-
-    choco install winflexbison
-    WINFLEXBISON_DIR="/c/ProgramData/chocolatey/lib/winflexbison/tools"
-    cp "${WINFLEXBISON_DIR}/win_bison.exe" "${WINFLEXBISON_DIR}/bison.exe"
-    export PATH=$PATH:"${WINFLEXBISON_DIR}"
   fi
 
 before_script:
@@ -80,9 +66,8 @@ before_script:
 - export MRUBY_TOOLCHAIN=${TRAVIS_COMPILER}
 - echo MRUBY_TOOLCHAIN=$MRUBY_TOOLCHAIN
 - echo MRUBY_INT_SIZE=$MRUBY_INT_SIZE
-- echo BUILD_COMMAND=$BUILD_COMMAND
-- echo TEST_COMMAND=$TEST_COMMAND
+- echo RAKE_COMMAND=$RAKE_COMMAND
 
 script:
-- $BUILD_COMMAND
-- $TEST_COMMAND
+- $RAKE_COMMAND all
+- $RAKE_COMMAND test
