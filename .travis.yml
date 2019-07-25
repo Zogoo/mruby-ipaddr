@@ -40,6 +40,11 @@ before_install:
     export CXX=gcc-9
   fi
 - |
+  if [ "${TRAVIS_OS_NAME}" = "windows" ] && [ "${TRAVIS_COMPILER}" = "cl" ]; then
+    export CFLAGS="/c /nologo /W3 /we4013 /Zi /FS /MD /O2 /D_CRT_SECURE_NO_WARNINGS"
+    export CXXFLAGS="/c /nologo /W3 /Zi /FS /MD /O2 /EHs /D_CRT_SECURE_NO_WARNINGS"
+  fi
+- |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
     VC2017_REV="14.16.27023"
     UCRT_REV="10.0.17134.0"
@@ -66,6 +71,8 @@ before_install:
     # export LIBPATH="${VC2015_DIR}/lib/amd64":$LIBPATH
     export LIBPATH="${WIN10SDK_DIR}/Lib/${UCRT_REV}/ucrt/x64":$LIBPATH
     export LIBPATH="${WIN10SDK_DIR}/Lib/${UCRT_REV}/um/x64":$LIBPATH
+
+    where /r /c/Program Files (x86) m.lib
 
     # echo "####"
     # ls "/c/Program Files (x86)"
