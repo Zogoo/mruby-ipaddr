@@ -42,16 +42,19 @@ cache:
 before_install:
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
-    if [ ! -d "win_flex_bison" ]; then
+    if [ ! -f "win_flex_bison/bison.exe" ]; then
       wget -O win_flex_bison.zip "https://github.com/lexxmark/winflexbison/releases/download/v2.5.18/win_flex_bison-2.5.18.zip"
       7z x -y -owin_flex_bison win_flex_bison.zip
       cp win_flex_bison/win_bison.exe win_flex_bison/bison.exe
+      export PATH=${TRAVIS_BUILD_DIR}/win_flex_bison:$PATH
     fi
 
     echo '@echo off'                                                              >  vs2017_rake.cmd
     echo 'set PATH=%TRAVIS_BUILD_DIR%\win_flex_bison;%PATH%'                      >> vs2017_rake.cmd
     echo 'set VS2017=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\BuildTools' >> vs2017_rake.cmd
     echo 'call "%VS2017%\VC\Auxiliary\Build\vcvars64.bat"'                        >> vs2017_rake.cmd
+    echo 'set PATH'                                                               >> vs2017_rake.cmd
+    echo 'echo %TRAVIS_BUILD_DIR%'                                                >> vs2017_rake.cmd
     echo 'echo.'                                                                  >> vs2017_rake.cmd
     echo 'echo rake %*'                                                           >> vs2017_rake.cmd
     echo 'echo.'                                                                  >> vs2017_rake.cmd
