@@ -51,107 +51,22 @@ before_install:
   fi
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
-    # VC2017_REV="14.16.27023"
-    # UCRT_REV="10.0.17134.0"
-    #
-    # PROGRAM_DIR="/c/Program Files (x86)"
-    #
-    # VS2017_DIR="${PROGRAM_DIR}/Microsoft Visual Studio/2017"
-    # VC2017_DIR="${VS2017_DIR}/BuildTools/VC/Tools/MSVC/${VC2017_REV}"
-    #
-    # WIN10SDK_DIR="${PROGRAM_DIR}/Windows Kits/10"
-    #
-    # export PATH=$PATH:"${VC2017_DIR}/bin/Hostx64/x64"
-    #
-    # export INCLUDE="${VC2017_DIR}/include"
-    # export INCLUDE="${WIN10SDK_DIR}/Include/${UCRT_REV}/shared":$INCLUDE
-    # export INCLUDE="${WIN10SDK_DIR}/Include/${UCRT_REV}/ucrt":$INCLUDE
-    # export INCLUDE="${WIN10SDK_DIR}/Include/${UCRT_REV}/um":$INCLUDE
-    #
-    # export LIBPATH="${VC2017_DIR}/lib/x64"
-    # export LIBPATH="${WIN10SDK_DIR}/Lib/${UCRT_REV}/ucrt/x64":$LIBPATH
-    # export LIBPATH="${WIN10SDK_DIR}/Lib/${UCRT_REV}/um/x64":$LIBPATH
-
-    # echo "\"C:\Program Files (x86)\Microsoft Visual Studio\2017\VC\BuildTools\bin\amd64\vcvars64.bat\" && env" | xargs cmd //c
-
-    # echo "##############################################################"
-    # cmd //c "/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Auxiliary/Build/vcvars64.bat"
-    # echo "##############################################################"
-
-    # echo "####"
-    # ls "/c/Program Files (x86)"
-    # echo "####/MSBuild"
-    # ls "/c/Program Files (x86)/MSBuild"
-    # echo "####/Microsoft SDKs"
-    # ls "/c/Program Files (x86)/Microsoft SDKs"
-    # echo "####/Microsoft Visual Studio"
-    # ls "/c/Program Files (x86)/Microsoft Visual Studio"
-    # echo "####/Microsoft Visual Studio/2017"
-    # ls "/c/Program Files (x86)/Microsoft Visual Studio/2017"
-    # echo "####/Microsoft Visual Studio/2017/BuildTools"
-    # ls "/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools"
-    # echo "####/Microsoft Visual Studio/2017/BuildTools/SDK"
-    # ls "/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/SDK"
-    # echo "####/Microsoft Visual Studio/2017/BuildTools/VC"
-    # ls "/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC"
-    # echo "####/Microsoft Visual Studio/2017/BuildTools/VC/Auxiliary"
-    # ls "/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Auxiliary"
-    # echo "####/Microsoft Visual Studio/2017/BuildTools/VC/Auxiliary/Build"
-    # ls "/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Auxiliary/Build"
-    # echo "####/Microsoft Visual Studio/2017/BuildTools/VC/Tools"
-    # ls "/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools"
-    # echo "####/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC"
-    # ls "/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC"
-    # echo "####/Microsoft Visual Studio 14.0"
-    # ls "/c/Program Files (x86)/Microsoft Visual Studio 14.0"
-    # echo "####/Microsoft Visual Studio 14.0/VC"
-    # ls "/c/Program Files (x86)/Microsoft Visual Studio 14.0/VC"
-    # echo "####/Microsoft Visual Studio 14.0/VC/bin"
-    # ls "/c/Program Files (x86)/Microsoft Visual Studio 14.0/VC/bin"
-    # echo "####/Microsoft Visual Studio 14.0/VC/include"
-    # ls "/c/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include"
-    # echo "####/Microsoft Visual Studio 14.0/VC/lib"
-    # ls "/c/Program Files (x86)/Microsoft Visual Studio 14.0/VC/lib"
-    # echo "####/Microsoft Visual Studio 14.0/VC/lib/amd64"
-    # ls "/c/Program Files (x86)/Microsoft Visual Studio 14.0/VC/lib/amd64"
-    # echo "####/Windows Kits"
-    # ls "/c/Program Files (x86)/Windows Kits"
-    # echo "####/Windows Kits/10"
-    # ls "/c/Program Files (x86)/Windows Kits/10"
-    # echo "####/Windows Kits/10/Include"
-    # ls "/c/Program Files (x86)/Windows Kits/10/Include"
-    # echo "####/Windows Kits/10/Include/10.0.17134.0"
-    # ls "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17134.0"
-    # echo "####/Windows Kits/10/Include/10.0.17134.0/shared"
-    # ls "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17134.0/shared"
-    # echo "####/Windows Kits/10/Include/10.0.17134.0/ucrt"
-    # ls "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17134.0/ucrt"
-    # echo "####/Windows Kits/10/Include/10.0.17134.0/um"
-    # ls "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17134.0/um"
-    # echo "####/Windows Kits/10/Lib"
-    # ls "/c/Program Files (x86)/Windows Kits/10/Lib"
-    # echo "####/Windows Kits/10/Lib/10.0.17134.0"
-    # ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0"
-    # echo "####/Windows Kits/10/Lib/10.0.17134.0/ucrt"
-    # ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0/ucrt"
-    # echo "####/Windows Kits/10/Lib/10.0.17134.0/um"
-    # ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0/um"
-    # echo "####/Windows Kits/10/Lib/10.0.17134.0/um/x64"
-    # ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0/um/x64"
-    # echo "####/Windows Kits/10/Lib/10.0.17134.0/ucrt/x64"
-    # ls "/c/Program Files (x86)/Windows Kits/10/Lib/10.0.17134.0/ucrt/x64"
-    # echo "####"
-
     echo '@echo off' > build.bat
-    echo 'call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"' >> build.bat
-    echo 'set PATH=C:\ProgramData\chocolatey\lib\winflexbison\tools;%PATH%' >> build.bat
-    echo 'set' >> build.bat
+    # echo 'call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"' >> build.bat
+    echo 'call "%VCINSTALLDIR%\Auxiliary\Build\vcvars64.bat"' >> build.bat
+    # echo 'set PATH=C:\ProgramData\chocolatey\lib\winflexbison\tools;%PATH%' >> build.bat
+    echo 'set PATH=%ChocolateyInstall%\lib\winflexbison\tools;%PATH%' >> build.bat
+    echo 'echo.' >> test.bat
+    echo 'echo rake all' >> test.bat
+    echo 'echo.' >> test.bat
     echo 'rake all' >> build.bat
 
     echo '@echo off' > test.bat
     echo 'call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"' >> test.bat
     echo 'set PATH=C:\ProgramData\chocolatey\lib\winflexbison\tools;%PATH%' >> test.bat
-    echo 'set' >> test.bat
+    echo 'echo.' >> test.bat
+    echo 'echo rake test' >> test.bat
+    echo 'echo.' >> test.bat
     echo 'rake test' >> test.bat
 
     choco install winflexbison
