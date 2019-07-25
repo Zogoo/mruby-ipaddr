@@ -6,7 +6,7 @@ compiler:
 - cl
 
 os:
-# - linux
+- linux
 # - osx
 - windows
 
@@ -35,21 +35,27 @@ matrix:
     compiler: clang
   - env: MRUBY_INT_SIZE=MRB_INT16
 
+cache:
+  directories:
+  - win_flex_bison
+
 before_install:
 - |
   if [ "${TRAVIS_OS_NAME}" = "windows" ]; then
-    choco install winflexbison
-    WINFLEXBISON_DIR="/c/ProgramData/chocolatey/lib/winflexbison/tools"
-    cp "${WINFLEXBISON_DIR}/win_bison.exe" "${WINFLEXBISON_DIR}/bison.exe"
+    if [ ! -d "win_flex_bison" ]; then
+      wget -O win_flex_bison.zip "https://github.com/lexxmark/winflexbison/releases/download/v2.5.18/win_flex_bison-2.5.18.zip"
+      7z x -y -owin_flex_bison win_flex_bison.zip
+      cp win_flex_bison/win_bison.exe win_flex_bison/bison.exe
+    fi
 
-    echo '@echo off'                                                                 >  vs2017_rake.cmd
-    echo 'set PATH=%ChocolateyInstall%\lib\winflexbison\tools;%PATH%'                >> vs2017_rake.cmd
-    echo 'set VS2017=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\BuildTools'    >> vs2017_rake.cmd
-    echo 'call "%VS2017%\VC\Auxiliary\Build\vcvars64.bat"'                           >> vs2017_rake.cmd
-    echo 'echo.'                                                                     >> vs2017_rake.cmd
-    echo 'echo rake %*'                                                              >> vs2017_rake.cmd
-    echo 'echo.'                                                                     >> vs2017_rake.cmd
-    echo 'rake %*'                                                                   >> vs2017_rake.cmd
+    echo '@echo off'                                                              >  vs2017_rake.cmd
+    echo 'set PATH=%TRAVIS_BUILD_DIR%\win_flex_bison;%PATH%'                      >> vs2017_rake.cmd
+    echo 'set VS2017=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\BuildTools' >> vs2017_rake.cmd
+    echo 'call "%VS2017%\VC\Auxiliary\Build\vcvars64.bat"'                        >> vs2017_rake.cmd
+    echo 'echo.'                                                                  >> vs2017_rake.cmd
+    echo 'echo rake %*'                                                           >> vs2017_rake.cmd
+    echo 'echo.'                                                                  >> vs2017_rake.cmd
+    echo 'rake %*'                                                                >> vs2017_rake.cmd
 
     export RAKE='cmd //c vs2017_rake.cmd -E $stdout.sync=true'
   else
