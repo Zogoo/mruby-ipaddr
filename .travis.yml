@@ -72,7 +72,7 @@ before_install:
     export LIBPATH="${WIN10SDK_DIR}/Lib/${UCRT_REV}/ucrt/x64":$LIBPATH
     export LIBPATH="${WIN10SDK_DIR}/Lib/${UCRT_REV}/um/x64":$LIBPATH
 
-    where /r "/c/Program Files (x86) m.lib"
+    cmd /c 'where /r "C:\Program Files (x86)" m.lib'
 
     # echo "####"
     # ls "/c/Program Files (x86)"
